@@ -24,6 +24,6 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tweets", tweetRouter);
 
 // GLOBAL ERROR HANDLER
-app.use(errorHander);
+app.use(errorHandler);
 
 module.exports = app;
