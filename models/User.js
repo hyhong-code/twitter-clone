@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
   handle: {
     type: String,
     required: [true, "A handle is required"],
+    unique: [true, "Handle is already taken"],
     trim: true,
     lowercase: true,
     minlength: [5, "A handle must be at least 5 charactres long"],
@@ -18,6 +20,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "An email is required"],
+    unique: [true, "Email is already used"],
     trim: true,
     validate: {
       validator: (v) => validator.isEmail(v),
@@ -58,8 +61,16 @@ UserSchema.pre("save", async function (next) {
 });
 
 // VERIFY USER PASSWORD
-UserSchema.isCorrectPassword = async function (plainPassword) {
+UserSchema.methods.isCorrectPassword = async function (plainPassword) {
   return await bcrypt.compare(plainPassword, this.password);
+};
+
+// SIGN AND RETURN A JWT TOKEN
+UserSchema.methods.signJwtToken = function () {
+  const payload = { id: this.id, handle: this.handle };
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
 };
 
 module.exports = mongoose.model("User", UserSchema);
