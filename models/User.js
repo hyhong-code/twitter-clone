@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const UserSchema = new mongoose.Schema({
   handle: {
@@ -28,10 +29,37 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: [6, "A password must be at least 6 characters long"],
   },
+  passwordConfirm: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return v === this.password;
+      },
+      message: "Passwords do not match",
+    },
+  },
+  passwordChangedAt: {
+    type: Date,
+    default: Date.now(),
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
+
+// HASH USER PASSWORD BEFORE SAVING
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined;
+  this.passwordChangedAt = new Date(Date.now() - 5000);
+});
+
+// VERIFY USER PASSWORD
+UserSchema.isCorrectPassword = async function (plainPassword) {
+  return await bcrypt.compare(plainPassword, this.password);
+};
 
 module.exports = mongoose.model("User", UserSchema);
