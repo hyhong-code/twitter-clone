@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import Moment from "react-moment";
 
 const TweetCard = ({ tweet }) => {
   const {
@@ -16,7 +17,9 @@ const TweetCard = ({ tweet }) => {
         </LinkContainer>
         <Card.Text className="my-1">{text}</Card.Text>
         <hr className="my-0" />
-        <small className="text-muted">{createdAt}</small>
+        <small className="text-muted">
+          <Moment format="dddd, MMMM Do YYYY, h:mm:ss a">{createdAt}</Moment>
+        </small>
         {/* <Card.Link href="#">Card Link</Card.Link>
           <Card.Link href="#">Another Link</Card.Link> */}
       </Card.Body>

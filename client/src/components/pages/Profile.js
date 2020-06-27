@@ -8,8 +8,7 @@ import Spinner from "../layout/Spinner";
 const Profile = ({ match, getUserTweets, tweets, history }) => {
   useEffect(() => {
     getUserTweets(match.params.id);
-  }, [getUserTweets]);
-  console.log(tweets);
+  }, [getUserTweets, match.params.id]);
 
   const handleClick = () => {
     history.goBack();

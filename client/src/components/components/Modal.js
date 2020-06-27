@@ -19,7 +19,6 @@ const _Modal = ({ show, handleClose }) => {
         <Chat />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary">Send</Button>
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>

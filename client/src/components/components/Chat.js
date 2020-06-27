@@ -1,22 +1,23 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Form, ListGroup, Button } from "react-bootstrap";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 
 import Message from "./Message";
 
-let socket;
-
 const Chat = ({ handle }) => {
-  useEffect(() => {
-    socket = io("/");
-  }, []);
+  const inputRef = useRef();
+  const socketRef = useRef();
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      setChats([...chats, message]);
+    socketRef.current = io("/");
+
+    socketRef.current.on("message", (message) => {
+      setChats((prev) => [message, ...prev]);
     });
-  });
+
+    return () => socketRef.current.disconnect();
+  }, []);
 
   const [msg, setMsg] = useState("");
   const [chats, setChats] = useState([]);
@@ -27,12 +28,13 @@ const Chat = ({ handle }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    socket.emit("message", {
+    socketRef.current.emit("message", {
       name: handle,
       text: msg,
       date: new Date(Date.now()),
     });
     setMsg("");
+    inputRef.current.focus();
   };
 
   return (
@@ -45,6 +47,7 @@ const Chat = ({ handle }) => {
             rows="2"
             value={msg}
             onChange={handleChange}
+            ref={inputRef}
           />
         </Form.Group>
         <Button variant="outline-dark" type="submit">
