@@ -1,13 +1,13 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 
-const Message = () => {
+const Message = ({ chat: { name, text, date } }) => {
   return (
     <ListGroup.Item>
       <div>
-        <p className="message-user">@John-Doe</p>
-        <p className="message">Hello there</p>
-        <small className="text-muted">2020-06-27T09:48:34.793Z</small>
+        <p className="message-user">@{name}</p>
+        <p className="message">{text}</p>
+        <small className="text-muted">{date}</small>
       </div>
     </ListGroup.Item>
   );

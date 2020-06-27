@@ -37,19 +37,6 @@ textarea {
   overflow: scroll;
 }
 
-@media (max-width: 768px) {
-  .alerts {
-    right: 1rem;
-    top: 4rem;
-    opacity: 0.9;
-    max-height: 15rem;
-  }
-
-  .alert {
-    margin-bottom: 0.5rem;
-  }
-}
-
 .alert {
   padding: 0.3rem;
 }
@@ -78,5 +65,29 @@ textarea {
   small {
     margin: 0;
     display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .alerts {
+    right: 1rem;
+    top: 4rem;
+    opacity: 0.9;
+    max-height: 15rem;
+  }
+
+  .alert {
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-dialog {
+    top: 5%;
+    left: 5%;
+    width: 85%;
+    right: 5%;
+  }
+
+  .message-board {
+    height: 20rem;
   }
 }

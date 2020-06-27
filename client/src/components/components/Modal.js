@@ -5,9 +5,15 @@ import Chat from "./Chat";
 
 const _Modal = ({ show, handleClose }) => {
   return (
-    <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+    <Modal
+      className="chatModal"
+      show={show}
+      onHide={handleClose}
+      backdrop="static"
+      keyboard={false}
+    >
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>Chat Room</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Chat />
