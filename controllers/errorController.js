@@ -1,4 +1,4 @@
-const CustomError = require('../utils/customError');
+const CustomError = require("../utils/customError");
 
 // Development enviroment
 const sendErrorDev = (err, res) => {
@@ -21,10 +21,10 @@ const sendErrorProd = (err, res) => {
 
     // Programming or other unkown error
   } else {
-    console.error('ERROR', err);
+    console.error("ERROR", err);
     res.status(500).json({
-      status: 'error',
-      message: 'Something went wrong',
+      status: "error",
+      message: "Something went wrong",
     });
   }
 };
@@ -38,19 +38,16 @@ const handleCastErrorDB = (error) => {
 // Handle mongoose Duplicate keys error
 const handleDuplicateKeyDB = (error) => {
   const message = Object.keys(error.keyValue)
-    .map(
-      (key) =>
-        `Value "${error.keyValue[key]}" is already taken for field "${key}"`
-    )
-    .join(', ');
-  return new CustomError(`Duplicate key: ${message}`, 400);
+    .map((key) => `${key}: "${error.keyValue[key]}" is already taken.`)
+    .join(", ");
+  return new CustomError(message, 400);
 };
 
 // Handle mongoose Validation error
 const handleValidationErrorDB = (error) => {
   const message = Object.values(error.errors)
     .map((err) => err.message)
-    .join(', ');
+    .join(", ");
   return new CustomError(`Invalid input: ${message}`, 400);
 };
 
@@ -62,19 +59,19 @@ const handleJWTExpiredError = () =>
 
 const errorController = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
+  err.status = err.status || "error";
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
     error.name = err.name; // err.name is enumerable field
     error.message = err.message; // err.message is enumerable field
-    if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.name === "CastError") error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateKeyDB(error);
     if (error.errors) error = handleValidationErrorDB(error);
-    if (error.name === 'JsonWebTokenError') error = handleInvalidJWTError();
-    if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    if (error.name === "JsonWebTokenError") error = handleInvalidJWTError();
+    if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
     sendErrorProd(error, res);
   }
 };

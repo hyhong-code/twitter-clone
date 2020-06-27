@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { signup } from "../../actions/authActions";
+import { Redirect } from "react-router-dom";
 
-const Signup = () => {
+const Signup = ({ signup, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     handle: "",
     email: "",
@@ -16,8 +19,13 @@ const Signup = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    signup(formData);
     console.log(formData);
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <Row>
@@ -76,4 +84,8 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+const mapStateToProps = ({ auth: { isAuthenticated } }) => ({
+  isAuthenticated,
+});
+
+export default connect(mapStateToProps, { signup })(Signup);

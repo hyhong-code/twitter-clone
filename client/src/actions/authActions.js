@@ -4,18 +4,20 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILED,
 } from "./actionTypes";
 import axios from "axios";
 
 import { setTokenHeader } from "../util/auth";
 
-export const login = (formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-  };
+const config = {
+  headers: {
+    "Content-type": "application/json",
+  },
+};
 
+export const login = (formData) => async (dispatch) => {
   try {
     const resp = await axios.post("/api/v1/users/login", formData, config);
     console.log(resp.data);
@@ -25,6 +27,23 @@ export const login = (formData) => async (dispatch) => {
     console.log(error.response.data);
     dispatch({
       type: LOGIN_FAILED,
+    });
+  }
+};
+
+export const signup = (formData) => async (dispatch) => {
+  try {
+    const resp = await axios.post("/api/v1/users/register", formData, config);
+    console.log(resp.data);
+    dispatch({
+      type: SIGNUP_SUCCESS,
+      payload: resp.data.data,
+    });
+    dispatch(loadUser());
+  } catch (error) {
+    console.log(error.response.data);
+    dispatch({
+      type: SIGNUP_FAILED,
     });
   }
 };

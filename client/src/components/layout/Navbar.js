@@ -9,13 +9,13 @@ const _Navbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <LinkContainer to="/">
+          <LinkContainer exact to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/signup">
+          <LinkContainer exact to="/signup">
             <Nav.Link>Signup</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/login">
+          <LinkContainer exact to="/login">
             <Nav.Link>Login</Nav.Link>
           </LinkContainer>
           <Nav.Link>Logout</Nav.Link>
