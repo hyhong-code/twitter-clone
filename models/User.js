@@ -10,8 +10,8 @@ const UserSchema = new mongoose.Schema({
     unique: [true, "Handle is already taken"],
     trim: true,
     lowercase: true,
-    minlength: [5, "A handle must be at least 5 charactres long"],
-    maxlength: [15, "A handle must be no more than 15 characters long"],
+    minlength: [3, "A handle must be at least 3 charactres long"],
+    maxlength: [30, "A handle must be no more than 30 characters long"],
     match: [
       /^[a-zA-Z0-9-_]+$/,
       'A handle can only contain "a-z", "0-9", "_", and "-"',
@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: [6, "A password must be at least 6 characters long"],
+    maxlength: [30, "A password must no more than 30 characters long"],
   },
   passwordConfirm: {
     type: String,

@@ -7,9 +7,10 @@ const asyncHandler = require("../utils/asyncHandler");
 // @ACCESS   PUBLIC
 exports.register = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
+  const token = user.signJwtToken();
   res.status(201).json({
     status: "success",
-    data: { user },
+    data: { token },
   });
 });
 
@@ -17,12 +18,12 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @ROUTE    POST /api/v1/users/login
 // @ACCESS   PUBLIC
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { handle, password } = req.body;
+  const user = await User.findOne({ handle });
 
   // HANDLE USER NOT EXIST
   if (!user) {
-    return next(new CustomError(`No such user with email ${email}`, 404));
+    return next(new CustomError(`No such user with handle ${handle}`, 404));
   }
 
   // HANDLE PASSWORD INCORRECT
@@ -35,5 +36,20 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { token },
+  });
+});
+
+// @DESC     LOAD CURRENT USER
+// @ROUTE    POST /api/v1/users/loadMe
+// @ACCESS   PRIVATE
+exports.loadMe = asyncHandler(async (req, res, next) => {
+  const { id, handle, email } = user;
+  res.status(200).json({
+    status: "success",
+    data: {
+      id,
+      handle,
+      email,
+    },
   });
 });
