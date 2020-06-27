@@ -3,3 +3,13 @@
 textarea {
   resize: none;
 }
+
+.loading {
+  width: 5rem;
+  height: 5rem;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-top: -2.5rem;
+  margin-left: -2.5rem;
+}

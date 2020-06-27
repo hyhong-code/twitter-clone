@@ -6,13 +6,14 @@ import { Row, Col } from "react-bootstrap";
 import { getTweets } from "../../actions/tweetActions";
 import TweetForm from "../components/TweetForm";
 import TweetCard from "../components/TweetCard";
+import Spinner from "../layout/Spinner";
 
 const Home = ({ getTweets, auth, tweets }) => {
   useEffect(() => {
     getTweets();
   }, [getTweets]);
 
-  return (
+  return tweets.length ? (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
         <TweetForm />
@@ -23,6 +24,8 @@ const Home = ({ getTweets, auth, tweets }) => {
         </div>
       </Col>
     </Row>
+  ) : (
+    <Spinner />
   );
 };
 

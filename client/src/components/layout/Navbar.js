@@ -4,7 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 
-const _Navbar = ({ logout, isAuthenticated }) => {
+const _Navbar = ({ logout, isAuthenticated, user }) => {
   const guestLinks = (
     <Fragment>
       <LinkContainer exact to="/signup">
@@ -21,7 +21,12 @@ const _Navbar = ({ logout, isAuthenticated }) => {
       <LinkContainer exact to="/">
         <Nav.Link>Home</Nav.Link>
       </LinkContainer>
-      <LinkContainer exact to="/">
+      {user && (
+        <LinkContainer exact to={`profile/${user.id}`}>
+          <Nav.Link>Profile</Nav.Link>
+        </LinkContainer>
+      )}
+      <LinkContainer exact to="/login">
         <Nav.Link onClick={logout}>Logout</Nav.Link>
       </LinkContainer>
     </Fragment>
@@ -44,8 +49,9 @@ const _Navbar = ({ logout, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = ({ auth: { isAuthenticated } }) => ({
+const mapStateToProps = ({ auth: { isAuthenticated, user } }) => ({
   isAuthenticated,
+  user,
 });
 
 export default connect(mapStateToProps, { logout })(_Navbar);
