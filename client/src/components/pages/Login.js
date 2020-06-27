@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { login } from "../../actions/authActions";
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     handle: "",
     password: "",
@@ -14,7 +16,7 @@ const Login = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(formData);
+    login(formData);
   };
 
   return (
@@ -51,4 +53,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, { login })(Login);

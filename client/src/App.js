@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/layout/Navbar";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import { connect } from "react-redux";
+import { loadUser } from "./actions/authActions";
 
-const App = () => {
+const App = ({ loadUser }) => {
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -21,4 +27,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect(null, { loadUser })(App);

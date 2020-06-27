@@ -47,9 +47,7 @@ exports.loadMe = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: {
-      id,
-      handle,
-      email,
+      user: { id, handle, email },
     },
   });
 });
