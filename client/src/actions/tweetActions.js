@@ -27,6 +27,7 @@ export const getTweets = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error.response.data);
+    dispatch(setAlert(true, error.response.data.message));
   }
 };
 
@@ -38,9 +39,11 @@ export const createTweet = (text) => async (dispatch) => {
       type: CREATE_TWEET,
       payload: resp.data.data,
     });
+    dispatch(setAlert(false, `Tweet shared!`, 3000));
     return true;
   } catch (error) {
     console.log(error.response.data);
+    dispatch(setAlert(true, error.response.data.message));
   }
 };
 
@@ -57,5 +60,6 @@ export const getUserTweets = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error.reaponse.data);
+    dispatch(setAlert(true, error.response.data.message));
   }
 };

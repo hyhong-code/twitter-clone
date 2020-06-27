@@ -25,13 +25,14 @@ export const login = (formData) => async (dispatch) => {
     console.log(resp.data);
     dispatch({ type: LOGIN_SUCCESS, payload: resp.data.data });
     dispatch(loadUser());
+    dispatch(setAlert(false, `Login success`, 3000));
   } catch (error) {
     console.log(error.response.data);
     console.log(error.response.data.message);
     dispatch({
       type: LOGIN_FAILED,
     });
-    dispatch(setAlert(true, error.response.data.message, 5000));
+    dispatch(setAlert(true, error.response.data.message));
   }
 };
 
@@ -44,11 +45,13 @@ export const signup = (formData) => async (dispatch) => {
       payload: resp.data.data,
     });
     dispatch(loadUser());
+    dispatch(setAlert(false, `Signup success`, 3000));
   } catch (error) {
     console.log(error.response.data);
     dispatch({
       type: SIGNUP_FAILED,
     });
+    dispatch(setAlert(true, error.response.data.message, 10000));
   }
 };
 
@@ -61,11 +64,13 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: resp.data.data,
     });
+    dispatch(setAlert(false, `Welcome`, 3000));
   } catch (error) {
     console.log(error.response.data);
     dispatch({
       type: AUTH_ERROR,
     });
+    dispatch(setAlert(true, error.response.data.message));
   }
 };
 
@@ -73,4 +78,5 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+  dispatch(setAlert(false, `Logout success`, 3000));
 };
