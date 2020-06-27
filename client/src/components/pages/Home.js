@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-
 import { Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import { getTweets } from "../../actions/tweetActions";
 import TweetForm from "../components/TweetForm";
 import TweetCard from "../components/TweetCard";
 import Spinner from "../layout/Spinner";
 
-const Home = ({ getTweets, auth, tweets }) => {
+const Home = ({ getTweets, isAuthenticated, tweets }) => {
   useEffect(() => {
     getTweets();
   }, [getTweets]);
+
+  if (!isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
 
   return tweets.length ? (
     <Row>
@@ -29,6 +33,9 @@ const Home = ({ getTweets, auth, tweets }) => {
   );
 };
 
-const mapStateToProps = ({ auth, tweets }) => ({ auth, tweets });
+const mapStateToProps = ({ auth: { isAuthenticated }, tweets }) => ({
+  isAuthenticated,
+  tweets,
+});
 
 export default connect(mapStateToProps, { getTweets })(Home);

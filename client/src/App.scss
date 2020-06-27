@@ -13,3 +13,16 @@ textarea {
   margin-top: -2.5rem;
   margin-left: -2.5rem;
 }
+
+.user {
+  cursor: pointer;
+  display: inline;
+  border: 1px solid transparent;
+  padding: 0.5rem;
+  transition: border 0.5s;
+  border-radius: 5px;
+
+  &:hover {
+    border: 1px solid #333;
+  }
+}
