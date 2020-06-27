@@ -7,6 +7,7 @@ import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import { connect } from "react-redux";
 import { loadUser } from "./actions/authActions";
+import PrivateRoute from "./util/PrivateRoute";
 
 const App = ({ loadUser }) => {
   useEffect(() => {
@@ -18,9 +19,9 @@ const App = ({ loadUser }) => {
       <Navbar />
       <Container>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/login" exact component={Login} />
+          <PrivateRoute exact path="/" component={Home} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </Container>
     </BrowserRouter>

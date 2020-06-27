@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
@@ -27,13 +27,15 @@ const _Navbar = ({ logout, isAuthenticated }) => {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand>TwitterClone</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          {isAuthenticated ? authLinks : guestLinks}
-        </Nav>
-      </Navbar.Collapse>
+      <Container>
+        <Navbar.Brand>TwitterClone</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            {isAuthenticated ? authLinks : guestLinks}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 };
