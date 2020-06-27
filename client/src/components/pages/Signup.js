@@ -24,7 +24,7 @@ const Signup = ({ signup, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/" />;
   }
 
   return (
