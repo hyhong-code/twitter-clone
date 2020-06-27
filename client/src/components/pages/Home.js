@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import TweetForm from "../components/TweetForm";
+import { Row, Col } from "react-bootstrap";
 
-const Home = () => {
-  return <h1 className="display-4">Home</h1>;
+import { getTweets } from "../../actions/tweetActions";
+
+const Home = ({ getTweets }) => {
+  useEffect(() => {
+    getTweets();
+  }, []);
+
+  return (
+    <Row>
+      <Col md={{ span: 8, offset: 2 }}>
+        <TweetForm />
+      </Col>
+    </Row>
+  );
 };
 
-export default Home;
+export default connect(null, { getTweets })(Home);

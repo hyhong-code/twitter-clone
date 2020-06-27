@@ -21,14 +21,18 @@ const _Navbar = ({ logout, isAuthenticated }) => {
       <LinkContainer exact to="/">
         <Nav.Link>Home</Nav.Link>
       </LinkContainer>
-      <Nav.Link onClick={logout}>Logout</Nav.Link>
+      <LinkContainer exact to="/">
+        <Nav.Link onClick={logout}>Logout</Nav.Link>
+      </LinkContainer>
     </Fragment>
   );
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect="true">
       <Container>
-        <Navbar.Brand>TwitterClone</Navbar.Brand>
+        <LinkContainer exact to="/">
+          <Navbar.Brand>TwitterClone</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">

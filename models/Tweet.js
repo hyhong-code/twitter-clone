@@ -10,13 +10,21 @@ const TweetSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: "Uesr",
+    ref: "User",
     required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
+});
+
+TweetSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "user",
+    select: "handle",
+  });
+  next();
 });
 
 module.exports = mongoose.model("Tweet", TweetSchema);
