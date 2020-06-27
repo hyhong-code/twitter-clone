@@ -8,6 +8,7 @@ import {
 import axios from "axios";
 
 import { setAlert } from "./alertActions";
+import { setLoading, clearLoading } from "./loadingActions";
 
 const config = {
   headers: {
@@ -16,6 +17,7 @@ const config = {
 };
 
 export const getTweets = () => async (dispatch) => {
+  dispatch(setLoading());
   dispatch({
     type: CLEAR_TWEETS,
   });
@@ -30,6 +32,7 @@ export const getTweets = () => async (dispatch) => {
     console.log(error.response.data);
     dispatch(setAlert(true, error.response.data.message));
   }
+  dispatch(clearLoading());
 };
 
 export const createTweet = (text) => async (dispatch) => {
@@ -49,6 +52,7 @@ export const createTweet = (text) => async (dispatch) => {
 };
 
 export const getUserTweets = (id) => async (dispatch) => {
+  dispatch(setLoading());
   dispatch({
     type: CLEAR_TWEETS,
   });
@@ -63,6 +67,7 @@ export const getUserTweets = (id) => async (dispatch) => {
     console.log(error.reaponse.data);
     dispatch(setAlert(true, error.response.data.message));
   }
+  dispatch(clearLoading());
 };
 
 export const deleteTweet = (id) => async (dispatch) => {

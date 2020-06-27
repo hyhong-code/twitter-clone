@@ -1,19 +1,27 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import Moment from "react-moment";
+import { connect } from "react-redux";
 
-const Message = ({ chat: { name, text, date } }) => {
+const Message = ({ chat: { name, text, date }, handle }) => {
+  console.log(handle, name);
   return (
     <ListGroup.Item>
-      <div>
+      <div className={`${handle === name && "text-right"}`}>
         <p className="message-user">@{name}</p>
         <p className="message">{text}</p>
-        <small className="text-muted">
-          <Moment format="dddd, MMMM Do YYYY, h:mm:ss a">{date}</Moment>
+        <small className="text-muted text-nowrap">
+          <Moment format="h:mm:ss a">{date}</Moment>
         </small>
       </div>
     </ListGroup.Item>
   );
 };
 
-export default Message;
+const mapStateToProps = ({
+  auth: {
+    user: { handle },
+  },
+}) => ({ handle });
+
+export default connect(mapStateToProps)(Message);

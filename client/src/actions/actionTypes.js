@@ -17,3 +17,6 @@ export const DELETE_TWEET = "DELETE_TWEET";
 
 export const SET_ALERT = "SET_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";
+
+export const SET_LOADING = "SET_LOADING";
+export const CLEAR_LOADING = "CLEAR_LOADING";

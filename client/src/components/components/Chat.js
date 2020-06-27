@@ -43,8 +43,7 @@ const Chat = ({ handle }) => {
         <Form.Group>
           <Form.Label>Enter message:</Form.Label>
           <Form.Control
-            as="textarea"
-            rows="2"
+            type="text"
             value={msg}
             onChange={handleChange}
             ref={inputRef}
@@ -55,7 +54,7 @@ const Chat = ({ handle }) => {
         </Button>
       </Form>
 
-      <div className="message-board mt-3">
+      <div className="message-board mt-3 border p-2">
         <ListGroup>
           {chats.map((chat) => (
             <Message key={`${chat.name}-${chat.date}`} chat={chat} />

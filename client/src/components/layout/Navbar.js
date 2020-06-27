@@ -33,7 +33,9 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
         </LinkContainer>
       )}
       <Nav.Link onClick={handleShow}>Chat</Nav.Link>
-      <Nav.Link onClick={logout}>Logout</Nav.Link>
+      <LinkContainer exact to="/login">
+        <Nav.Link onClick={logout}>Logout</Nav.Link>
+      </LinkContainer>
     </Fragment>
   );
 

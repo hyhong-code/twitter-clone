@@ -1,10 +1,11 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 
 import { deleteTweet } from "../../actions/tweetActions";
+import example from "../../assets/img/example.jpeg";
 
 const TweetCard = ({ tweet, user, deleteTweet }) => {
   const {
@@ -14,6 +15,7 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
   } = tweet;
   return (
     <Card className="mb-3">
+      <Card.Img variant="top" src={example}></Card.Img>
       <Card.Body>
         <LinkContainer className="user" to={`/profile/${_id}`}>
           <Card.Title>@{handle}</Card.Title>
@@ -21,16 +23,17 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
         <Card.Text className="my-1">{text}</Card.Text>
         <hr className="my-0" />
         <small className="text-muted">
-          <Moment format="dddd, MMMM Do YYYY, h:mm:ss a">{createdAt}</Moment>
+          <Moment format="YYYY/MM/DD h:mm">{createdAt}</Moment>
         </small>
         {user && user.id === _id && (
-          <Button
-            onClick={() => deleteTweet(tweet._id)}
+          <Badge
+            pill
             variant="danger"
-            className="ml-3"
+            className="float-right mt-1"
+            onClick={() => deleteTweet(tweet._id)}
           >
             X
-          </Button>
+          </Badge>
         )}
       </Card.Body>
     </Card>

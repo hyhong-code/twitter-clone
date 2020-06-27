@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createTweet } from "../../actions/tweetActions";
 
@@ -32,9 +32,12 @@ const TweetForm = ({ createTweet }) => {
           ref={inputRef}
         />
       </Form.Group>
-      <Button vatiant="primary" type="submit">
-        Share
-      </Button>
+      <div className="d-flex align-items-center">
+        <Button vatiant="primary" className="mr-2" type="submit">
+          Share
+        </Button>
+        <Form.File id="exampleFormControlFile1" />
+      </div>
     </Form>
   );
 };
