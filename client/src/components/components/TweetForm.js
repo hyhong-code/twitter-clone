@@ -19,7 +19,7 @@ const TweetForm = () => {
         <p className="lead mt-2">Share your thoughts</p>
         <Form.Control
           as="textarea"
-          rows="2"
+          rows="3"
           value={text}
           onChange={handleChange}
         />
