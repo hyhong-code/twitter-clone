@@ -34,7 +34,7 @@ const Signup = () => {
               value={handle}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
@@ -47,7 +47,7 @@ const Signup = () => {
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
@@ -57,7 +57,7 @@ const Signup = () => {
               value={password}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"

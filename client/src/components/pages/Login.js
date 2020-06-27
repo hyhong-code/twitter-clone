@@ -32,7 +32,7 @@ const Login = () => {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
