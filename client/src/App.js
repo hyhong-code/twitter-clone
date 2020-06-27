@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Profile from "./components/pages/Profile";
+import Alerts from "./components/layout/Alerts";
 import { loadUser } from "./actions/authActions";
 import PrivateRoute from "./util/PrivateRoute";
 
@@ -18,6 +19,7 @@ const App = ({ loadUser }) => {
   return (
     <BrowserRouter>
       <Navbar />
+      <Alerts />
       <Container>
         <Switch>
           <PrivateRoute exact path="/" component={Home} />

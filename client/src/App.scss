@@ -26,3 +26,40 @@ textarea {
     border: 1px solid #333;
   }
 }
+
+.alerts {
+  position: fixed;
+  right: 3rem;
+  width: 15rem;
+  top: 5rem;
+  z-index: 10;
+  max-height: 25rem;
+  overflow: scroll;
+}
+
+@media (max-width: 768px) {
+  .alerts {
+    right: 1rem;
+    top: 4rem;
+    opacity: 0.9;
+    max-height: 15rem;
+  }
+
+  .alert {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.alert {
+  padding: 0.3rem;
+}
+
+.alert-head {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.alert-text {
+  font-size: 0.8rem;
+  margin-bottom: 0;
+}

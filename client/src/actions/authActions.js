@@ -11,6 +11,8 @@ import axios from "axios";
 
 import { setTokenHeader } from "../util/auth";
 
+import { setAlert } from "./alertActions";
+
 const config = {
   headers: {
     "Content-type": "application/json",
@@ -25,9 +27,11 @@ export const login = (formData) => async (dispatch) => {
     dispatch(loadUser());
   } catch (error) {
     console.log(error.response.data);
+    console.log(error.response.data.message);
     dispatch({
       type: LOGIN_FAILED,
     });
+    dispatch(setAlert(true, error.response.data.message, 5000));
   }
 };
 

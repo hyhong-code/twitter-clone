@@ -6,6 +6,8 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 
+import { setAlert } from "./alertActions";
+
 const config = {
   headers: {
     "Content-Type": "application/json",
