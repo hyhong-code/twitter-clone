@@ -48,7 +48,8 @@ exports.getTweet = asyncHandler(async (req, res, next) => {
 // @ACCESS   PRIVATE
 exports.createTweet = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
-  const tweet = await Tweet.create(req.body);
+  let tweet = await Tweet.create(req.body);
+  tweet = await tweet.execPopulate({ path: "user", select: "handle" });
 
   res.status(201).json({
     status: "success",

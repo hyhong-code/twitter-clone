@@ -8,11 +8,12 @@ const TweetCard = ({ tweet }) => {
     user: { handle },
   } = tweet;
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>{handle}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{createdAt}</Card.Subtitle>
-        <Card.Text>{text}</Card.Text>
+        <Card.Text className="my-1">{text}</Card.Text>
+        <hr className="my-0" />
+        <small className="text-muted">{createdAt}</small>
         {/* <Card.Link href="#">Card Link</Card.Link>
           <Card.Link href="#">Another Link</Card.Link> */}
       </Card.Body>

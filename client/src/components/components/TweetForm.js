@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { createTweet } from "../../actions/tweetActions";
 
-const TweetForm = () => {
+const TweetForm = ({ createTweet }) => {
   const [text, setText] = useState("");
 
   const handleChange = (evt) => {
     setText(evt.target.value);
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(text);
+    if (createTweet(text)) {
+      setText("");
+    }
   };
 
   return (
@@ -31,4 +35,4 @@ const TweetForm = () => {
   );
 };
 
-export default TweetForm;
+export default connect(null, { createTweet })(TweetForm);

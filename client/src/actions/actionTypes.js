@@ -10,3 +10,4 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGOUT = "LOGOUT";
 
 export const GET_TWEETS = "GET_TWEETS";
+export const CREATE_TWEET = "CREATE_TWEET";
