@@ -13,6 +13,7 @@ export const GET_TWEETS = "GET_TWEETS";
 export const CREATE_TWEET = "CREATE_TWEET";
 export const GET_USER_TWEETS = "GET_USER_TWEETS";
 export const CLEAR_TWEETS = "CLEAR_TWEETS";
+export const DELETE_TWEET = "DELETE_TWEET";
 
 export const SET_ALERT = "SET_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";

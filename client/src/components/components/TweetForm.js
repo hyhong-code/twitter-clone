@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createTweet } from "../../actions/tweetActions";
 
 const TweetForm = ({ createTweet }) => {
+  const inputRef = useRef();
+
   const [text, setText] = useState("");
 
   const handleChange = (evt) => {
@@ -15,6 +17,7 @@ const TweetForm = ({ createTweet }) => {
     if (createTweet(text)) {
       setText("");
     }
+    inputRef.current.focus();
   };
 
   return (
@@ -26,6 +29,7 @@ const TweetForm = ({ createTweet }) => {
           rows="3"
           value={text}
           onChange={handleChange}
+          ref={inputRef}
         />
       </Form.Group>
       <Button vatiant="primary" type="submit">

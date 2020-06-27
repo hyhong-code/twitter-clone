@@ -8,7 +8,7 @@ import TweetForm from "../components/TweetForm";
 import TweetCard from "../components/TweetCard";
 import Spinner from "../layout/Spinner";
 
-const Home = ({ getTweets, isAuthenticated, tweets }) => {
+const Home = ({ getTweets, isAuthenticated, user, tweets }) => {
   useEffect(() => {
     getTweets();
   }, [getTweets]);
@@ -23,7 +23,7 @@ const Home = ({ getTweets, isAuthenticated, tweets }) => {
         <TweetForm />
         <div className="p-4">
           {tweets.map((tweet) => (
-            <TweetCard key={tweet._id} tweet={tweet} />
+            <TweetCard key={tweet._id} tweet={tweet} user={user} />
           ))}
         </div>
       </Col>
@@ -33,9 +33,10 @@ const Home = ({ getTweets, isAuthenticated, tweets }) => {
   );
 };
 
-const mapStateToProps = ({ auth: { isAuthenticated }, tweets }) => ({
+const mapStateToProps = ({ auth: { isAuthenticated, user }, tweets }) => ({
   isAuthenticated,
   tweets,
+  user,
 });
 
 export default connect(mapStateToProps, { getTweets })(Home);

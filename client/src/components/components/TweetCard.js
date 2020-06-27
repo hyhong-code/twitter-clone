@@ -1,9 +1,12 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Moment from "react-moment";
+import { connect } from "react-redux";
 
-const TweetCard = ({ tweet }) => {
+import { deleteTweet } from "../../actions/tweetActions";
+
+const TweetCard = ({ tweet, user, deleteTweet }) => {
   const {
     text,
     createdAt,
@@ -20,11 +23,18 @@ const TweetCard = ({ tweet }) => {
         <small className="text-muted">
           <Moment format="dddd, MMMM Do YYYY, h:mm:ss a">{createdAt}</Moment>
         </small>
-        {/* <Card.Link href="#">Card Link</Card.Link>
-          <Card.Link href="#">Another Link</Card.Link> */}
+        {user && user.id === _id && (
+          <Button
+            onClick={() => deleteTweet(tweet._id)}
+            variant="danger"
+            className="ml-3"
+          >
+            X
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );
 };
 
-export default TweetCard;
+export default connect(null, { deleteTweet })(TweetCard);

@@ -3,6 +3,7 @@ import {
   CREATE_TWEET,
   GET_USER_TWEETS,
   CLEAR_TWEETS,
+  DELETE_TWEET,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -60,6 +61,21 @@ export const getUserTweets = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error.reaponse.data);
+    dispatch(setAlert(true, error.response.data.message));
+  }
+};
+
+export const deleteTweet = (id) => async (dispatch) => {
+  console.log(id);
+  try {
+    await axios.delete(`/api/v1/tweets/${id}`);
+    dispatch({
+      type: DELETE_TWEET,
+      payload: id,
+    });
+    dispatch(setAlert(false, `Tweet deleted`, 3000));
+  } catch (error) {
+    console.log(error.response.data);
     dispatch(setAlert(true, error.response.data.message));
   }
 };
