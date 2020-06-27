@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Container } from "react-bootstrap";
 
-import Navbar from "./layout/Navbar";
+import Navbar from "../layout/Navbar";
 
 function App() {
   return (
