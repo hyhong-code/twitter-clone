@@ -31,13 +31,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
     return next(new CustomError(`User not found`, 404));
   }
 
-  const { id, handle, email } = user;
-  res.status(200).json({
-    status: "success",
-    data: {
-      id,
-      handle,
-      email,
-    },
-  });
+  req.user = user;
+  next();
 });

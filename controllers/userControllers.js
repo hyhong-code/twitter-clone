@@ -43,7 +43,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @ROUTE    POST /api/v1/users/loadMe
 // @ACCESS   PRIVATE
 exports.loadMe = asyncHandler(async (req, res, next) => {
-  const { id, handle, email } = user;
+  const { id, handle, email } = req.user;
   res.status(200).json({
     status: "success",
     data: {
