@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { login } from "../../actions/authActions";
+import { Redirect } from "react-router-dom";
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     handle: "",
     password: "",
@@ -14,10 +15,14 @@ const Login = ({ login }) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    login(formData);
+    await login(formData);
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <Row>
@@ -53,4 +58,8 @@ const Login = ({ login }) => {
   );
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = ({ auth: { isAuthenticated } }) => ({
+  isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

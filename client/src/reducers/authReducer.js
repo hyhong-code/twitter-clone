@@ -3,6 +3,7 @@ import {
   LOGIN_FAILED,
   USER_LOADED,
   AUTH_ERROR,
+  LOGOUT,
 } from "../actions/actionTypes.js";
 
 const INITIAL_STATE = {
@@ -20,6 +21,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return { ...state, isAuthenticated: true, ...payload };
     case LOGIN_FAILED:
     case AUTH_ERROR:
+    case LOGOUT:
       localStorage.removeItem("jwtToken");
       return { ...state, isAuthenticated: false, user: null };
     default:

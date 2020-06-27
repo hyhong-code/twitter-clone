@@ -3,6 +3,7 @@ import {
   LOGIN_FAILED,
   USER_LOADED,
   AUTH_ERROR,
+  LOGOUT,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -43,4 +44,10 @@ export const loadUser = () => async (dispatch) => {
       type: AUTH_ERROR,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
 };
