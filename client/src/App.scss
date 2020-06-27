@@ -63,3 +63,20 @@ textarea {
   font-size: 0.8rem;
   margin-bottom: 0;
 }
+
+.message-board {
+  height: 25rem;
+  overflow: scroll;
+  .message-user {
+    margin: 0;
+  }
+
+  .message {
+    margin: 0;
+  }
+
+  small {
+    margin: 0;
+    display: block;
+  }
+}
