@@ -2,13 +2,8 @@ import React from "react";
 import { Card, Image, Badge } from "react-bootstrap";
 import Moment from "react-moment";
 import { LinkContainer } from "react-router-bootstrap";
-import { withRouter } from "react-router-dom";
 
 const CommentCard = ({ comment, user, history }) => {
-  const handleClick = () => {
-    history.push(`profile/${user.id}`);
-  };
-  console.log("**********", user);
   return (
     <Card className="mb-3">
       <Card.Body className="py-2">
@@ -47,4 +42,4 @@ const CommentCard = ({ comment, user, history }) => {
   );
 };
 
-export default withRouter(CommentCard);
+export default CommentCard;

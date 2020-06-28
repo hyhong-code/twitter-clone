@@ -1,7 +1,13 @@
-import { COMMENTS_LOADED } from "./actionTypes";
+import { COMMENTS_LOADED, COMMENTS_CREATED } from "./actionTypes";
 import { setLoading, clearLoading } from "./loadingActions";
 import { setAlert } from "./alertActions";
 import axios from "axios";
+
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 export const getComments = (tweetId) => async (dispatch) => {
   dispatch(setLoading());
@@ -11,8 +17,6 @@ export const getComments = (tweetId) => async (dispatch) => {
       `/api/v1/tweets/${tweetId}/comments?sort=-createdAt`
     );
     const respTweet = await axios.get(`/api/v1/tweets/${tweetId}`);
-    console.log(respComments.data);
-    console.log(respTweet.data);
     dispatch({
       type: COMMENTS_LOADED,
       payload: {
@@ -24,4 +28,21 @@ export const getComments = (tweetId) => async (dispatch) => {
     console.log(error.response.data);
   }
   dispatch(clearLoading());
+};
+
+export const createComment = (formData, tweetId) => async (dispatch) => {
+  try {
+    const resp = await axios.post(
+      `/api/v1/tweets/${tweetId}/comments`,
+      formData,
+      config
+    );
+    dispatch({
+      type: COMMENTS_CREATED,
+      payload: resp.data.data,
+    });
+    console.log("NEW COMMENT BEFORE DISPATCH", resp.data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };

@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 
-const CommentForm = () => {
+import { createComment } from "../../actions/commentAction";
+
+const CommentForm = ({ createComment, commentingTweet }) => {
   const inputRef = useRef();
   const [text, setText] = useState("");
 
@@ -11,6 +14,7 @@ const CommentForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    createComment({ text }, commentingTweet._id);
   };
 
   return (
@@ -32,4 +36,8 @@ const CommentForm = () => {
   );
 };
 
-export default CommentForm;
+const mapStateToProps = ({ comments: { commentingTweet } }) => ({
+  commentingTweet,
+});
+
+export default connect(mapStateToProps, { createComment })(CommentForm);

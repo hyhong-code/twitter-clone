@@ -27,6 +27,17 @@ exports.createComment = asyncHandler(async (req, res, next) => {
     select: "handle photo",
   });
 
+  comment = await comment
+    .populate({
+      path: "user",
+      select: "handle",
+    })
+    .populate({
+      path: "profile",
+      select: "photo",
+    })
+    .execPopulate();
+
   res.status(201).json({
     status: "success",
     data: { comment },

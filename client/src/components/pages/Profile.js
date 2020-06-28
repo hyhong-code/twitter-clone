@@ -1,7 +1,6 @@
 import React, { useEffect, Fragment } from "react";
 import { Row, Col, Button, Image } from "react-bootstrap";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 import TweetCard from "../components/TweetCard";
 import { getProfile } from "../../actions/profileAction";
@@ -87,4 +86,4 @@ const mapStateToProps = ({ tweets, auth: { user }, loading, profile }) => ({
   profile,
 });
 
-export default connect(mapStateToProps, { getProfile })(withRouter(Profile));
+export default connect(mapStateToProps, { getProfile })(Profile);
