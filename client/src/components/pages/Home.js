@@ -17,9 +17,7 @@ const Home = ({ getTweets, isAuthenticated, user, tweets, loading }) => {
     return <Redirect to="/login" />;
   }
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return user && tweets && !loading ? (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
         <TweetForm />
@@ -36,6 +34,8 @@ const Home = ({ getTweets, isAuthenticated, user, tweets, loading }) => {
         </div>
       </Col>
     </Row>
+  ) : (
+    <Spinner />
   );
 };
 

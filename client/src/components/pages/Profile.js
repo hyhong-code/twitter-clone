@@ -64,9 +64,7 @@ const Profile = ({
     </Fragment>
   );
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return tweets && user && profile && !loading ? (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
         <Button className="my-3" variant="secondary" onClick={handleClick}>
@@ -76,6 +74,8 @@ const Profile = ({
         {tweetsDisplay}
       </Col>
     </Row>
+  ) : (
+    <Spinner />
   );
 };
 
