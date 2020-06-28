@@ -4,16 +4,16 @@ import {
   PROFILE_UPDATED,
 } from "../actions/actionTypes";
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = null;
 
 const profileReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_PROFILE:
     case PROFILE_UPDATED:
-      return { ...state, ...payload.profile };
+      return { ...payload.profile };
     case CLEAR_PROFILE:
-      return {};
+      return null;
     default:
       return state;
   }

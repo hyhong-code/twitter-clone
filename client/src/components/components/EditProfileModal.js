@@ -23,7 +23,6 @@ const EditProfileModal = ({ updateProfile, profile }) => {
   };
 
   const handleFile = (evt) => {
-    console.log(evt.target.files[0]);
     setFile(evt.target.files[0]);
     setFileName(evt.target.files[0].name);
   };
@@ -49,7 +48,7 @@ const EditProfileModal = ({ updateProfile, profile }) => {
       bio: profile.bio || "",
       address: profile.address || "",
     });
-  }, []);
+  }, [setFormData, profile.name, profile.bio, profile.address]);
 
   return (
     <Fragment>

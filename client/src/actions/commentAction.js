@@ -15,7 +15,6 @@ const config = {
 
 export const getComments = (tweetId) => async (dispatch) => {
   dispatch(setLoading());
-  console.log("getComments ran");
   try {
     const respComments = await axios.get(
       `/api/v1/tweets/${tweetId}/comments?sort=-createdAt`
@@ -57,13 +56,12 @@ export const createComment = (formData, tweetId) => async (dispatch) => {
 
 export const deleteComment = (commentId) => async (dispatch) => {
   try {
-    const resp = await axios.delete(`/api/v1/comments/${commentId}`);
-    console.log(resp.data);
+    await axios.delete(`/api/v1/comments/${commentId}`);
     dispatch({
       type: COMMENT_DELETED,
       payload: commentId,
     });
-    dispatch(setAlert(false, `Comment delted`, 3000));
+    dispatch(setAlert(false, `Comment deleted`, 3000));
   } catch (error) {
     console.log(error);
     dispatch(setAlert(true, error.response.data.message));

@@ -18,7 +18,7 @@ const Profile = ({
 }) => {
   useEffect(() => {
     getProfile(match.params.id);
-  }, [match]);
+  }, [getProfile, match.params.id]);
 
   const handleClick = () => {
     history.goBack();
@@ -35,7 +35,7 @@ const Profile = ({
     <p className="lead">User has no tweets</p>
   );
 
-  const userProfile = (
+  const userProfile = () => (
     <Fragment>
       <Image
         width="200"
@@ -64,13 +64,13 @@ const Profile = ({
     </Fragment>
   );
 
-  return tweets && user && profile && !loading ? (
-    <Row>
+  return !loading && tweets && user && profile ? (
+    <Row className="pb-6">
       <Col md={{ span: 8, offset: 2 }}>
         <Button className="my-3" variant="secondary" onClick={handleClick}>
           GO BACK
         </Button>
-        {userProfile}
+        {userProfile()}
         {profile.user && profile.user._id === user.id && <EditProfileModal />}
         {tweetsDisplay}
       </Col>

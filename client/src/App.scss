@@ -4,6 +4,10 @@ textarea {
   resize: none;
 }
 
+.pb-6 {
+  padding-top: 6rem;
+}
+
 .loading {
   width: 5rem;
   height: 5rem;
@@ -78,6 +82,10 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .pb-6 {
+    padding-top: 4rem;
+  }
+
   .alerts {
     right: 1rem;
     width: 10rem;

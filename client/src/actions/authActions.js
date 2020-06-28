@@ -22,7 +22,6 @@ const config = {
 export const login = (formData) => async (dispatch) => {
   try {
     const resp = await axios.post("/api/v1/users/login", formData, config);
-    console.log(resp.data);
     dispatch({ type: LOGIN_SUCCESS, payload: resp.data.data });
     dispatch(loadUser());
     dispatch(setAlert(false, `Login success`, 3000));
@@ -38,7 +37,6 @@ export const login = (formData) => async (dispatch) => {
 export const signup = (formData) => async (dispatch) => {
   try {
     const resp = await axios.post("/api/v1/users/register", formData, config);
-    console.log(resp.data);
     dispatch({
       type: SIGNUP_SUCCESS,
       payload: resp.data.data,
@@ -58,7 +56,6 @@ export const loadUser = () => async (dispatch) => {
   try {
     setTokenHeader(localStorage.jwtToken);
     const resp = await axios.get("/api/v1/users/loadMe");
-    console.log(resp.data);
     dispatch({
       type: USER_LOADED,
       payload: resp.data.data,

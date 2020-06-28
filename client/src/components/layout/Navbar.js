@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
+
 import { logout } from "../../actions/authActions";
 import ChatModal from "../components/ChatModal";
 
@@ -41,7 +42,13 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
 
   return (
     <Fragment>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect="true">
+      <Navbar
+        bg="dark"
+        variant="dark"
+        expand="lg"
+        collapseOnSelect="true"
+        fixed="top"
+      >
         <Container>
           <LinkContainer exact to="/">
             <Navbar.Brand>TwitterClone</Navbar.Brand>

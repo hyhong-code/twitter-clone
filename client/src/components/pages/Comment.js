@@ -18,14 +18,15 @@ const Comment = ({
   comments,
 }) => {
   useEffect(() => {
-    console.log(match.params.tweetId);
     getComments(match.params.tweetId);
-  }, [getComments]);
+  }, [getComments, match.params.tweetId]);
 
-  return user && commentingTweet && comments && !loading ? (
-    <Row>
+  return !loading && user && commentingTweet && comments ? (
+    <Row className="pb-6">
       <Col md={{ span: 8, offset: 2 }}>
-        <Button onClick={() => history.goBack()}>Back</Button>
+        <Button className="mb-3" onClick={() => history.goBack()}>
+          Back
+        </Button>
         <CommentTweet tweet={commentingTweet} user={user} />
         <CommentForm />
         <div className="px-4">

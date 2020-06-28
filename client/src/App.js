@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
+
+import { loadUser } from "./actions/authActions";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Profile from "./components/pages/Profile";
 import Alerts from "./components/layout/Alerts";
-import { loadUser } from "./actions/authActions";
 import PrivateRoute from "./util/PrivateRoute";
 import Comment from "./components/pages/Comment";
 

@@ -12,10 +12,10 @@ import {
 export const getProfile = (id) => async (dispatch) => {
   dispatch(setLoading());
   dispatch({
-    type: CLEAR_TWEETS,
+    type: CLEAR_PROFILE,
   });
   dispatch({
-    type: CLEAR_PROFILE,
+    type: CLEAR_TWEETS,
   });
   try {
     const respProfile = await axios.get(`/api/v1/users/${id}/profile`);
@@ -45,7 +45,6 @@ export const updateProfile = (formData) => async (dispatch) => {
   };
   try {
     const resp = await axios.patch("/api/v1/profile/me", formData, config);
-    console.log(resp.data);
     dispatch({
       type: PROFILE_UPDATED,
       payload: resp.data.data,

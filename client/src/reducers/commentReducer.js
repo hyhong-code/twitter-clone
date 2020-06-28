@@ -19,7 +19,6 @@ const commentReducer = (state = INITIAL_STATE, action) => {
         comments: payload.comments,
       };
     case COMMENT_CREATED:
-      console.log("COMMENT_CREATED");
       return {
         ...state,
         commentingTweet: {

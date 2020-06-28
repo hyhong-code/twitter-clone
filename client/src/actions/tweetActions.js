@@ -17,13 +17,12 @@ export const getTweets = () => async (dispatch) => {
   });
   try {
     const resp = await axios.get("/api/v1/tweets?sort=-createdAt");
-    console.log(resp.data);
     dispatch({
       type: GET_TWEETS,
       payload: resp.data.data,
     });
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch(setAlert(true, error.response.data.message));
   }
   dispatch(clearLoading());
@@ -37,7 +36,6 @@ export const createTweet = (formData) => async (dispatch) => {
   };
   try {
     const resp = await axios.post("/api/v1/tweets", formData, formConfig);
-    console.log(resp.data);
     dispatch({
       type: CREATE_TWEET,
       payload: resp.data.data,
@@ -52,7 +50,6 @@ export const createTweet = (formData) => async (dispatch) => {
 };
 
 export const deleteTweet = (id) => async (dispatch) => {
-  console.log(id);
   try {
     await axios.delete(`/api/v1/tweets/${id}`);
     dispatch({
@@ -69,7 +66,6 @@ export const deleteTweet = (id) => async (dispatch) => {
 export const likeTweet = (tweetId) => async (dispatch) => {
   try {
     const resp = await axios.patch(`/api/v1/tweets/${tweetId}/like`);
-    console.log("resp", resp.data);
     dispatch({
       type: LIKE_TWEET,
       payload: resp.data.data,
