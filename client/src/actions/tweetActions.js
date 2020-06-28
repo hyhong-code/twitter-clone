@@ -10,12 +10,6 @@ import axios from "axios";
 import { setAlert } from "./alertActions";
 import { setLoading, clearLoading } from "./loadingActions";
 
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
-
 export const getTweets = () => async (dispatch) => {
   dispatch(setLoading());
   dispatch({
@@ -41,7 +35,6 @@ export const createTweet = (formData) => async (dispatch) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
   try {
     const resp = await axios.post("/api/v1/tweets", formData, formConfig);
     console.log(resp.data);
@@ -52,7 +45,7 @@ export const createTweet = (formData) => async (dispatch) => {
     dispatch(setAlert(false, `Tweet shared!`, 3000));
     return true;
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch(setAlert(true, error.response.data.message));
     return false;
   }
@@ -68,7 +61,7 @@ export const deleteTweet = (id) => async (dispatch) => {
     });
     dispatch(setAlert(false, `Tweet deleted`, 3000));
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch(setAlert(true, error.response.data.message));
   }
 };
@@ -81,7 +74,9 @@ export const likeTweet = (tweetId) => async (dispatch) => {
       type: LIKE_TWEET,
       payload: resp.data.data,
     });
+    dispatch(setAlert(false, `Tweet liked`, 3000));
   } catch (error) {
-    console.log(error.response.data.message);
+    console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
   }
 };

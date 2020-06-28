@@ -31,7 +31,7 @@ export const getProfile = (id) => async (dispatch) => {
       payload: respTweet.data.data,
     });
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch(setAlert(true, error.response.data.message));
   }
   dispatch(clearLoading());
@@ -50,9 +50,11 @@ export const updateProfile = (formData) => async (dispatch) => {
       type: PROFILE_UPDATED,
       payload: resp.data.data,
     });
+    dispatch(setAlert(false, `Profile updated`, 3000));
     return true;
   } catch (error) {
     console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
     return false;
   }
 };

@@ -27,8 +27,7 @@ export const login = (formData) => async (dispatch) => {
     dispatch(loadUser());
     dispatch(setAlert(false, `Login success`, 3000));
   } catch (error) {
-    console.log(error.response.data);
-    console.log(error.response.data.message);
+    console.log(error);
     dispatch({
       type: LOGIN_FAILED,
     });
@@ -47,7 +46,7 @@ export const signup = (formData) => async (dispatch) => {
     dispatch(loadUser());
     dispatch(setAlert(false, `Signup success`, 3000));
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch({
       type: SIGNUP_FAILED,
     });
@@ -66,7 +65,7 @@ export const loadUser = () => async (dispatch) => {
     });
     dispatch(setAlert(false, `Welcome, ${resp.data.data.user.handle}`, 3000));
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
     dispatch({
       type: AUTH_ERROR,
     });

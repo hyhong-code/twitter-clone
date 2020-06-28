@@ -29,7 +29,8 @@ export const getComments = (tweetId) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
   }
   dispatch(clearLoading());
 };
@@ -45,9 +46,11 @@ export const createComment = (formData, tweetId) => async (dispatch) => {
       type: COMMENT_CREATED,
       payload: resp.data.data,
     });
+    dispatch(setAlert(false, `Comment created`, 3000));
     return true;
   } catch (error) {
     console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
     return false;
   }
 };
@@ -60,7 +63,9 @@ export const deleteComment = (commentId) => async (dispatch) => {
       type: COMMENT_DELETED,
       payload: commentId,
     });
+    dispatch(setAlert(false, `Comment delted`, 3000));
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
   }
 };

@@ -30,7 +30,7 @@ textarea {
 .alerts {
   position: fixed;
   right: 3rem;
-  width: 15rem;
+  width: 18rem;
   top: 5rem;
   z-index: 10;
   max-height: 25rem;
@@ -38,7 +38,7 @@ textarea {
 }
 
 .alert {
-  padding: 0.3rem;
+  padding: 0.8rem 1.2rem;
   z-index: 2000;
 }
 
@@ -80,12 +80,14 @@ textarea {
 @media (max-width: 768px) {
   .alerts {
     right: 1rem;
+    width: 10rem;
     top: 4rem;
-    opacity: 0.9;
-    max-height: 15rem;
+    max-height: 10rem;
+    overflow: scroll;
   }
 
   .alert {
+    padding: 0.2rem 0.4rem;
     margin-bottom: 0.5rem;
   }
 
