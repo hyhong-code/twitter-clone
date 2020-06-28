@@ -2,8 +2,11 @@ import React from "react";
 import { Card, Image, Badge } from "react-bootstrap";
 import Moment from "react-moment";
 import { LinkContainer } from "react-router-bootstrap";
+import { connect } from "react-redux";
 
-const CommentCard = ({ comment, user, history }) => {
+import { deleteComment } from "../../actions/commentAction";
+
+const CommentCard = ({ comment, user, deleteComment }) => {
   return (
     <Card className="mb-3">
       <Card.Body className="py-2">
@@ -32,7 +35,7 @@ const CommentCard = ({ comment, user, history }) => {
             pill
             variant="danger"
             className="delete float-right mt-1"
-            // onClick={() => deleteTweet(tweet._id)}
+            onClick={() => deleteComment(comment._id)}
           >
             X
           </Badge>
@@ -42,4 +45,4 @@ const CommentCard = ({ comment, user, history }) => {
   );
 };
 
-export default CommentCard;
+export default connect(null, { deleteComment })(CommentCard);

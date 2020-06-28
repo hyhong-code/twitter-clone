@@ -1,4 +1,8 @@
-import { COMMENTS_LOADED, COMMENTS_CREATED } from "./actionTypes";
+import {
+  COMMENTS_LOADED,
+  COMMENT_CREATED,
+  COMMENT_DELETED,
+} from "./actionTypes";
 import { setLoading, clearLoading } from "./loadingActions";
 import { setAlert } from "./alertActions";
 import axios from "axios";
@@ -38,10 +42,24 @@ export const createComment = (formData, tweetId) => async (dispatch) => {
       config
     );
     dispatch({
-      type: COMMENTS_CREATED,
+      type: COMMENT_CREATED,
       payload: resp.data.data,
     });
-    console.log("NEW COMMENT BEFORE DISPATCH", resp.data);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const deleteComment = (commentId) => async (dispatch) => {
+  try {
+    const resp = await axios.delete(`/api/v1/comments/${commentId}`);
+    console.log(resp.data);
+    dispatch({
+      type: COMMENT_DELETED,
+      payload: commentId,
+    });
   } catch (error) {
     console.log(error.response.data);
   }

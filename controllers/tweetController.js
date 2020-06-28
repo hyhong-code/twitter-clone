@@ -52,7 +52,11 @@ exports.getTweet = asyncHandler(async (req, res, next) => {
 exports.createTweet = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   let tweet = await Tweet.create(req.body);
-  tweet = await tweet.execPopulate({ path: "user", select: "handle" });
+  tweet = await tweet
+    .populate({ path: "user", select: "handle" })
+    .populate({ path: "profile", select: "photo" })
+    .populate("comments")
+    .execPopulate();
 
   // HANDLE PHOTO UPLOAD
   if (req.files && req.files.file) {

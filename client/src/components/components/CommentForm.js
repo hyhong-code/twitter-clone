@@ -12,9 +12,11 @@ const CommentForm = ({ createComment, commentingTweet }) => {
     setText(evt.target.value);
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    createComment({ text }, commentingTweet._id);
+    if (await createComment({ text }, commentingTweet._id)) {
+      setText("");
+    }
   };
 
   return (
