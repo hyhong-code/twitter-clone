@@ -11,8 +11,14 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   const profile = await Profile.findOneAndUpdate(
     { user: req.user.id },
     req.body,
-    { new: true, runValidators: true }
-  );
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).populate({
+    path: "user",
+    select: "handle",
+  });
 
   // HANDLE PROFILE PICTURE
   if (req.files && req.files.file) {
