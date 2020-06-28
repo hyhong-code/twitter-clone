@@ -58,7 +58,7 @@ exports.createTweet = asyncHandler(async (req, res, next) => {
     const fileName = `tweet-${tweet._id}.jpeg`;
     await sharp(req.files.file.data)
       .resize(1024, 576)
-      .toFormat("jpeg")
+      .jpeg()
       .toFile(
         path.resolve(`${__dirname}/../client/public/uploads/tweets/${fileName}`)
       );

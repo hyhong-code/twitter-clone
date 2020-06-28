@@ -50,7 +50,6 @@ const TweetForm = ({ createTweet }) => {
           Share
         </Button>
         <Form.File
-          id="custom-file"
           label={
             fileName.length <= 15 ? fileName : `${fileName.slice(0, 14)}...`
           }

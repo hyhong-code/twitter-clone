@@ -68,18 +68,12 @@ textarea {
   }
 }
 
-input[type="file"] {
-  display: none;
-}
-
-.custom-file-upload {
-  border: 1px solid #00aced;
-  border-radius: 5px;
-  display: inline-block;
-  padding: 6px 12px;
+.badge {
   cursor: pointer;
-  margin-bottom: 0;
-  color: #00aced;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 @media (max-width: 768px) {

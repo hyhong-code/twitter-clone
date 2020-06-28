@@ -41,6 +41,7 @@ export const createTweet = (formData) => async (dispatch) => {
       "Content-Type": "multipart/form-data",
     },
   };
+
   try {
     const resp = await axios.post("/api/v1/tweets", formData, formConfig);
     console.log(resp.data);
