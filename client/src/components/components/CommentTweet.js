@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Badge, Button } from "react-bootstrap";
+import { Card, Image, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -17,7 +17,7 @@ const CommentTweet = ({ tweet, user, deleteTweet }) => {
           ></Card.Img>
         )}
         <Card.Body className="py-2">
-          <LinkContainer className="user" to={`/profile/${user._id}`}>
+          <LinkContainer className="user" to={`/profile/${tweet.user._id}`}>
             <Card.Title>
               <Image
                 src={

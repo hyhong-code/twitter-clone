@@ -12,20 +12,21 @@ const CommentCard = ({ comment, user, history }) => {
   return (
     <Card className="mb-3">
       <Card.Body className="py-2">
-        {/* <LinkContainer className="user" to={`/profile/${user._id}`}> */}
-        <Card.Title onClick={handleClick}>
-          <Image
-            src={
-              process.env.PUBLIC_URL + `/uploads/users/${comment.profile.photo}`
-            }
-            className="mr-2"
-            roundedCircle
-            width="35"
-            alt="profilePic"
-          />
-          @{user.handle}
-        </Card.Title>
-        {/* </LinkContainer> */}
+        <LinkContainer className="user" to={`/profile/${user.id}`}>
+          <Card.Title>
+            <Image
+              src={
+                process.env.PUBLIC_URL +
+                `/uploads/users/${comment.profile.photo}`
+              }
+              className="mr-2"
+              roundedCircle
+              width="35"
+              alt="profilePic"
+            />
+            @{user.handle}
+          </Card.Title>
+        </LinkContainer>
         <Card.Text className="my-1 mt-0">{comment.text}</Card.Text>
         <hr className="my-0" />
         <small className="text-muted d-block">

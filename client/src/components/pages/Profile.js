@@ -17,7 +17,6 @@ const Profile = ({
   loading,
 }) => {
   useEffect(() => {
-    console.log(match);
     getProfile(match.params.id);
   }, [match]);
 
