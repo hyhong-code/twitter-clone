@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
-import Modal from "../components/Modal";
+import ChatModal from "../components/ChatModal";
 
 const _Navbar = ({ logout, isAuthenticated, user }) => {
   const [show, setShow] = useState(false);
@@ -54,7 +54,7 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Modal show={show} handleClose={handleClose} />
+      <ChatModal show={show} handleClose={handleClose} />
     </Fragment>
   );
 };

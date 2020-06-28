@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 import Chat from "./Chat";
 
-const _Modal = ({ show, handleClose }) => {
+const ChatModal = ({ show, handleClose }) => {
   return (
     <Modal
       className="chatModal"
@@ -27,4 +27,4 @@ const _Modal = ({ show, handleClose }) => {
   );
 };
 
-export default _Modal;
+export default ChatModal;

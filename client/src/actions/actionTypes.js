@@ -23,6 +23,7 @@ export const SET_LOADING = "SET_LOADING";
 export const CLEAR_LOADING = "CLEAR_LOADING";
 
 export const GET_PROFILE = "GET_PROFILE";
+export const PROFILE_UPDATED = "PROFILE_UPDATED";
 export const CLEAR_PROFILE = "CLEAR_PROFILE";
 
 export const COMMENTS_LOADED = "COMMENTS_LOADED";

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import TweetCard from "../components/TweetCard";
 import { getProfile } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
+import EditProfileModal from "../components/EditProfileModal";
 
 const Profile = ({
   match,
@@ -25,7 +26,6 @@ const Profile = ({
 
   const tweetsDisplay = tweets.length ? (
     <Fragment>
-      <h2 className="display-4">@{tweets[0].user.handle}</h2>
       <p className="lead">User has {tweets.length} Tweets:</p>
       {tweets.map((tweet) => (
         <TweetCard key={tweet._id} tweet={tweet} user={user} />
@@ -71,6 +71,7 @@ const Profile = ({
           GO BACK
         </Button>
         {userProfile}
+        {profile.user && profile.user._id === user.id && <EditProfileModal />}
         {tweetsDisplay}
       </Col>
     </Row>

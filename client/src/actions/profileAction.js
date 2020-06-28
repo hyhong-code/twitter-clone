@@ -6,6 +6,7 @@ import {
   CLEAR_PROFILE,
   GET_USER_TWEETS,
   CLEAR_TWEETS,
+  PROFILE_UPDATED,
 } from "./actionTypes";
 
 export const getProfile = (id) => async (dispatch) => {
@@ -34,4 +35,24 @@ export const getProfile = (id) => async (dispatch) => {
     dispatch(setAlert(true, error.response.data.message));
   }
   dispatch(clearLoading());
+};
+
+export const updateProfile = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  try {
+    const resp = await axios.patch("/api/v1/profile/me", formData, config);
+    console.log(resp.data);
+    dispatch({
+      type: PROFILE_UPDATED,
+      payload: resp.data.data,
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };

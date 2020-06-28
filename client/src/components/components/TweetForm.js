@@ -15,7 +15,6 @@ const TweetForm = ({ createTweet }) => {
   };
 
   const handleFile = (evt) => {
-    console.log(evt.target.files[0]);
     setFileName(evt.target.files[0].name);
     setFile(evt.target.files[0]);
   };
