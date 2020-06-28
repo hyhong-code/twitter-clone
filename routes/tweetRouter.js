@@ -16,9 +16,11 @@ const router = express.Router({ mergeParams: true });
 
 router.use("/:tweetId/comments", commentRouter);
 
-router.route("/").get(getTweets).post(protect, createTweet);
-router.route("/:id").get(getTweet).delete(protect, deleteTweet);
-router.route("/:id/like").patch(protect, likeTweet);
-router.route("/:id/unlike").patch(protect, unlikeTweet);
+router.use(protect);
+
+router.route("/").get(getTweets).post(createTweet);
+router.route("/:id").get(getTweet).delete(deleteTweet);
+router.route("/:id/like").patch(likeTweet);
+router.route("/:id/unlike").patch(unlikeTweet);
 
 module.exports = router;
