@@ -4,7 +4,7 @@ const CustomError = require("../utils/customError");
 const sharp = require("sharp");
 const path = require("path");
 
-// @DESC     UPDATE A PROFILE
+// @DESC     UPDATE LOGGED IN USER PROFILE
 // @ROUTE    PATCH /api/v1/profile/me
 // @ACCESS   PRIVATE
 exports.updateProfile = asyncHandler(async (req, res, next) => {
@@ -27,6 +27,25 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     // SAVE FILENAME TO DB
     profile.photo = fileName;
     await profile.save({ validateBeforeSave: true });
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: { profile },
+  });
+});
+
+// @DESC     UPDATE A USER'S PROFILE
+// @ROUTE    GET /api/v1/users/:userId/profile/
+// @ACCESS   PRIVATE
+exports.getUserProfile = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.params.userId });
+
+  // HANDLE PROFILE NOT EXIST
+  if (!profile) {
+    return next(
+      new CustomError(`No such profile with user id ${req.params.userId}`, 404)
+    );
   }
 
   res.status(200).json({
