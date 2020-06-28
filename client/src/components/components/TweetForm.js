@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createTweet } from "../../actions/tweetActions";
 
@@ -7,15 +7,28 @@ const TweetForm = ({ createTweet }) => {
   const inputRef = useRef();
 
   const [text, setText] = useState("");
+  const [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("Choose a Photo");
 
   const handleChange = (evt) => {
     setText(evt.target.value);
   };
 
+  const handleFile = (evt) => {
+    console.log(evt.target.files[0]);
+    setFileName(evt.target.files[0].name);
+    setFile(evt.target.files[0]);
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (createTweet(text)) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("text", text);
+    if (await createTweet(formData)) {
       setText("");
+      setFile("");
+      setFileName("Choose a Photo");
     }
     inputRef.current.focus();
   };
@@ -33,10 +46,17 @@ const TweetForm = ({ createTweet }) => {
         />
       </Form.Group>
       <div className="d-flex align-items-center">
-        <Button vatiant="primary" className="mr-2" type="submit">
+        <Button vatiant="primary" className="mr-2 px-4" type="submit">
           Share
         </Button>
-        <Form.File id="exampleFormControlFile1" />
+        <Form.File
+          id="custom-file"
+          label={
+            fileName.length <= 15 ? fileName : `${fileName.slice(0, 14)}...`
+          }
+          custom
+          onChange={handleFile}
+        />
       </div>
     </Form>
   );

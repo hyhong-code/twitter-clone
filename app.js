@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const fileUpload = require("express-fileupload");
 
 const errorHandler = require("./controllers/errorController");
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload());
 
 app.get("/", (req, res) => {
   res.send("hello");

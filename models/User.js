@@ -45,11 +45,10 @@ const UserSchema = new mongoose.Schema({
   },
   passwordChangedAt: {
     type: Date,
-    default: Date.now(),
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

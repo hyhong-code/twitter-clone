@@ -8,6 +8,9 @@ const TweetSchema = new mongoose.Schema({
     minlength: [5, "A tweet must be at least 5 characters long"],
     maxlength: [140, "A tweet must be at least 140 characters long"],
   },
+  photo: {
+    type: String,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
@@ -15,7 +18,7 @@ const TweetSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

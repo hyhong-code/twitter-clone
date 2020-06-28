@@ -35,9 +35,14 @@ export const getTweets = () => async (dispatch) => {
   dispatch(clearLoading());
 };
 
-export const createTweet = (text) => async (dispatch) => {
+export const createTweet = (formData) => async (dispatch) => {
+  const formConfig = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
   try {
-    const resp = await axios.post("/api/v1/tweets", { text }, config);
+    const resp = await axios.post("/api/v1/tweets", formData, formConfig);
     console.log(resp.data);
     dispatch({
       type: CREATE_TWEET,
@@ -48,6 +53,7 @@ export const createTweet = (text) => async (dispatch) => {
   } catch (error) {
     console.log(error.response.data);
     dispatch(setAlert(true, error.response.data.message));
+    return false;
   }
 };
 

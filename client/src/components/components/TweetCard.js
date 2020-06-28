@@ -13,9 +13,15 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
     createdAt,
     user: { handle, _id },
   } = tweet;
+
   return (
     <Card className="mb-3">
-      <Card.Img variant="top" src={example}></Card.Img>
+      {tweet.photo && (
+        <Card.Img
+          variant="top"
+          src={process.env.PUBLIC_URL + `uploads/tweets/${tweet.photo}`}
+        ></Card.Img>
+      )}
       <Card.Body>
         <LinkContainer className="user" to={`/profile/${_id}`}>
           <Card.Title>@{handle}</Card.Title>
