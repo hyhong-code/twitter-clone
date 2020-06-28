@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 
 import { logout } from "../../actions/authActions";
 import ChatModal from "../components/ChatModal";
+import RouterNavLink from "../layout/RouterNavLink";
 
 const _Navbar = ({ logout, isAuthenticated, user }) => {
   const [show, setShow] = useState(false);
@@ -13,31 +13,27 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const guestLinks = (
+  const guestLinks = () => (
     <Fragment>
-      <LinkContainer exact to="/signup">
-        <Nav.Link active={false}>Signup</Nav.Link>
-      </LinkContainer>
-      <LinkContainer exact to="/login">
-        <Nav.Link active={false}>Login</Nav.Link>
-      </LinkContainer>
+      <RouterNavLink exact to="/signup">
+        Signup
+      </RouterNavLink>
+      <RouterNavLink exact to="/login">
+        Login
+      </RouterNavLink>
     </Fragment>
   );
 
-  const authLinks = (
+  const authLinks = () => (
     <Fragment>
-      <LinkContainer exact to="/">
-        <Nav.Link active={false}>Home</Nav.Link>
-      </LinkContainer>
-      {user && (
-        <LinkContainer exact to={`/profile/${user.id}`}>
-          <Nav.Link active={false}>Profile</Nav.Link>
-        </LinkContainer>
-      )}
+      <RouterNavLink exact to="/">
+        Home
+      </RouterNavLink>
+      <RouterNavLink exact to={`/profile/${user.id}`}>
+        Profile
+      </RouterNavLink>
       <Nav.Link onClick={handleShow}>Chat</Nav.Link>
-      <LinkContainer exact to="/login">
-        <Nav.Link onClick={logout}>Logout</Nav.Link>
-      </LinkContainer>
+      <Nav.Link onClick={logout}>Logout</Nav.Link>
     </Fragment>
   );
 
@@ -57,7 +53,7 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              {isAuthenticated ? authLinks : guestLinks}
+              {isAuthenticated && user ? authLinks() : guestLinks()}
             </Nav>
           </Navbar.Collapse>
         </Container>

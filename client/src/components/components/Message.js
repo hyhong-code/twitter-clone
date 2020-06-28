@@ -4,7 +4,6 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 
 const Message = ({ chat: { name, text, date }, handle }) => {
-  console.log(handle, name);
   return (
     <ListGroup.Item>
       <div className={`${handle === name && "text-right"}`}>
