@@ -5,6 +5,7 @@ import axios from "axios";
 
 export const getComments = (tweetId) => async (dispatch) => {
   dispatch(setLoading());
+  console.log("getComments ran");
   try {
     const respComments = await axios.get(
       `/api/v1/tweets/${tweetId}/comments?sort=-createdAt`
@@ -15,7 +16,7 @@ export const getComments = (tweetId) => async (dispatch) => {
     dispatch({
       type: COMMENTS_LOADED,
       payload: {
-        comments: respComments.data.data.tweets,
+        comments: respComments.data.data.comments,
         commentingTweet: respTweet.data.data.tweet,
       },
     });

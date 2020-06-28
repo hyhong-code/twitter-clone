@@ -11,7 +11,7 @@ const commentReducer = (state = INITIAL_STATE, action) => {
     case COMMENTS_LOADED:
       return {
         ...state,
-        commentingTweet: payload.tweet,
+        commentingTweet: payload.commentingTweet,
         comments: payload.comments,
       };
     default:

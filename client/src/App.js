@@ -27,7 +27,7 @@ const App = ({ loadUser }) => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/profile/:id" component={Profile} />
-          <PrivateRoute exact path="/comment/:commentId" component={Comment} />
+          <PrivateRoute exact path="/comments/:tweetId" component={Comment} />
           <Route render={() => <h1>404 NOT FOUND</h1>} />
         </Switch>
       </Container>

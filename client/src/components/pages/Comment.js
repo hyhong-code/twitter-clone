@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { getComments } from "../../actions/commentAction";
@@ -10,6 +10,7 @@ import Spinner from "../layout/Spinner";
 
 const Comment = ({
   match,
+  history,
   loading,
   user,
   getComments,
@@ -17,14 +18,14 @@ const Comment = ({
   comments,
 }) => {
   useEffect(() => {
+    console.log(match.params.tweetId);
     getComments(match.params.tweetId);
-  }, []);
+  }, [getComments]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return user && commentingTweet && comments && !loading ? (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
+        <Button onClick={() => history.goBack()}>Back</Button>
         <CommentTweet tweet={commentingTweet} user={user} />
         <CommentForm />
         <div className="px-4">
@@ -34,6 +35,8 @@ const Comment = ({
         </div>
       </Col>
     </Row>
+  ) : (
+    <Spinner />
   );
 };
 
