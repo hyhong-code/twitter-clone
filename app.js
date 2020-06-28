@@ -8,6 +8,7 @@ const errorHandler = require("./controllers/errorController");
 // ROUTERS
 const userRouter = require("./routes/userRouter");
 const tweetRouter = require("./routes/tweetRouter");
+const commentRouter = require("./routes/commentRouter");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 // MOUNT ROUTERS
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tweets", tweetRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // GLOBAL ERROR HANDLER
 app.use(errorHandler);
