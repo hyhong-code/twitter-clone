@@ -4,15 +4,14 @@ import { LinkContainer } from "react-router-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 
-import { deleteTweet } from "../../actions/tweetActions";
+import { deleteTweet, likeTweet } from "../../actions/tweetActions";
 
-const TweetCard = ({ tweet, user, deleteTweet }) => {
+const TweetCard = ({ tweet, user, deleteTweet, likeTweet }) => {
   const {
     text,
     createdAt,
     user: { handle, _id },
   } = tweet;
-  console.log(tweet);
 
   return (
     <Card className="mb-3">
@@ -42,7 +41,10 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
         <small className="text-muted d-block">
           <Moment format="YYYY/MM/DD h:mm">{createdAt}</Moment>
         </small>
-        <Button className="py-0 mr-2">
+        <Button
+          className={`py-0 mr-2 ${tweet.likes.includes(user.id) && "disabled"}`}
+          onClick={() => likeTweet(tweet._id)}
+        >
           Like
           <Badge variant="secondary" className="ml-1">
             {tweet.likes.length}
@@ -69,4 +71,4 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
   );
 };
 
-export default connect(null, { deleteTweet })(TweetCard);
+export default connect(null, { deleteTweet, likeTweet })(TweetCard);

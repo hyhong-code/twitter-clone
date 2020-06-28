@@ -1,9 +1,9 @@
 import {
   GET_TWEETS,
   CREATE_TWEET,
-  GET_USER_TWEETS,
   CLEAR_TWEETS,
   DELETE_TWEET,
+  LIKE_TWEET,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -70,5 +70,18 @@ export const deleteTweet = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error.response.data);
     dispatch(setAlert(true, error.response.data.message));
+  }
+};
+
+export const likeTweet = (tweetId) => async (dispatch) => {
+  try {
+    const resp = await axios.patch(`/api/v1/tweets/${tweetId}/like`);
+    console.log("resp", resp.data);
+    dispatch({
+      type: LIKE_TWEET,
+      payload: resp.data.data,
+    });
+  } catch (error) {
+    console.log(error.response.data.message);
   }
 };

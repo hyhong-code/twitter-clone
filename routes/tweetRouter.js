@@ -7,7 +7,6 @@ const {
   createTweet,
   deleteTweet,
   likeTweet,
-  unlikeTweet,
 } = require("../controllers/tweetController");
 
 const commentRouter = require("./commentRouter");
@@ -21,6 +20,5 @@ router.use(protect);
 router.route("/").get(getTweets).post(createTweet);
 router.route("/:id").get(getTweet).delete(deleteTweet);
 router.route("/:id/like").patch(likeTweet);
-router.route("/:id/unlike").patch(unlikeTweet);
 
 module.exports = router;
