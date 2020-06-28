@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 
@@ -15,10 +16,10 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
   const guestLinks = (
     <Fragment>
       <LinkContainer exact to="/signup">
-        <Nav.Link>Signup</Nav.Link>
+        <Nav.Link active={false}>Signup</Nav.Link>
       </LinkContainer>
       <LinkContainer exact to="/login">
-        <Nav.Link>Login</Nav.Link>
+        <Nav.Link active={false}>Login</Nav.Link>
       </LinkContainer>
     </Fragment>
   );
@@ -26,11 +27,11 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
   const authLinks = (
     <Fragment>
       <LinkContainer exact to="/">
-        <Nav.Link>Home</Nav.Link>
+        <Nav.Link active={false}>Home</Nav.Link>
       </LinkContainer>
       {user && (
-        <LinkContainer exact to={`profile/${user.id}`}>
-          <Nav.Link>Profile</Nav.Link>
+        <LinkContainer exact to={`/profile/${user.id}`}>
+          <Nav.Link active={false}>Profile</Nav.Link>
         </LinkContainer>
       )}
       <Nav.Link onClick={handleShow}>Chat</Nav.Link>
