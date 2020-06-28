@@ -58,25 +58,6 @@ export const createTweet = (formData) => async (dispatch) => {
   }
 };
 
-export const getUserTweets = (id) => async (dispatch) => {
-  dispatch(setLoading());
-  dispatch({
-    type: CLEAR_TWEETS,
-  });
-  try {
-    const resp = await axios.get(`/api/v1/users/${id}/tweets?sort=-createdAt`);
-    console.log("look here", resp.data);
-    dispatch({
-      type: GET_USER_TWEETS,
-      payload: resp.data.data,
-    });
-  } catch (error) {
-    console.log(error.reaponse.data);
-    dispatch(setAlert(true, error.response.data.message));
-  }
-  dispatch(clearLoading());
-};
-
 export const deleteTweet = (id) => async (dispatch) => {
   console.log(id);
   try {

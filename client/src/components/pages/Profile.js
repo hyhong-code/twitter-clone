@@ -1,14 +1,23 @@
 import React, { useEffect, Fragment } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Image } from "react-bootstrap";
 import { connect } from "react-redux";
+
 import TweetCard from "../components/TweetCard";
-import { getUserTweets } from "../../actions/tweetActions";
+import { getProfile } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 
-const Profile = ({ match, getUserTweets, tweets, history, user, loading }) => {
+const Profile = ({
+  match,
+  history,
+  getProfile,
+  tweets,
+  user,
+  profile,
+  loading,
+}) => {
   useEffect(() => {
-    getUserTweets(match.params.id);
-  }, [getUserTweets, match.params.id]);
+    getProfile(match.params.id);
+  }, [getProfile, match.params.id]);
 
   const handleClick = () => {
     history.goBack();
@@ -26,6 +35,35 @@ const Profile = ({ match, getUserTweets, tweets, history, user, loading }) => {
     <p className="lead">User has no tweets</p>
   );
 
+  const userProfile = (
+    <Fragment>
+      <Image
+        width="200"
+        className="d-block"
+        src={process.env.PUBLIC_URL + `/uploads/users/${profile.photo}`}
+        roundedCircle
+      />
+      {profile.user && (
+        <h3>
+          <strong>HANDLE: @</strong>
+          {profile.user.handle}
+        </h3>
+      )}
+      {!!profile.name && (
+        <h4>
+          <strong>NAME: </strong>
+          {profile.name}
+        </h4>
+      )}
+      {!!profile.bio && (
+        <p className="lead">
+          <strong>BIO: </strong>
+          {profile.bio}
+        </p>
+      )}
+    </Fragment>
+  );
+
   return loading ? (
     <Spinner />
   ) : (
@@ -34,16 +72,18 @@ const Profile = ({ match, getUserTweets, tweets, history, user, loading }) => {
         <Button className="my-3" variant="secondary" onClick={handleClick}>
           GO BACK
         </Button>
+        {userProfile}
         {tweetsDisplay}
       </Col>
     </Row>
   );
 };
 
-const mapStateToProps = ({ tweets, auth: { user }, loading }) => ({
+const mapStateToProps = ({ tweets, auth: { user }, loading, profile }) => ({
   tweets,
   user,
   loading,
+  profile,
 });
 
-export default connect(mapStateToProps, { getUserTweets })(Profile);
+export default connect(mapStateToProps, { getProfile })(Profile);

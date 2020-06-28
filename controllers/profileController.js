@@ -39,7 +39,10 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @ROUTE    GET /api/v1/users/:userId/profile/
 // @ACCESS   PRIVATE
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
-  const profile = await Profile.findOne({ user: req.params.userId });
+  const profile = await Profile.findOne({ user: req.params.userId }).populate({
+    path: "user",
+    select: "handle",
+  });
 
   // HANDLE PROFILE NOT EXIST
   if (!profile) {
