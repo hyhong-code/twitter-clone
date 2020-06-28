@@ -30,7 +30,7 @@ const Profile = ({ match, getUserTweets, tweets, history, user, loading }) => {
     <Spinner />
   ) : (
     <Row>
-      <Col md={{ spam: 8, offset: 2 }}>
+      <Col md={{ span: 8, offset: 2 }}>
         <Button className="my-3" variant="secondary" onClick={handleClick}>
           GO BACK
         </Button>

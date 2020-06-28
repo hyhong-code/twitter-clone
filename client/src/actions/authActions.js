@@ -64,7 +64,7 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: resp.data.data,
     });
-    dispatch(setAlert(false, `Welcome`, 3000));
+    dispatch(setAlert(false, `Welcome, ${resp.data.data.user.handle}`, 3000));
   } catch (error) {
     console.log(error.response.data);
     dispatch({

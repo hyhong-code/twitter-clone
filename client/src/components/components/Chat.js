@@ -2,10 +2,11 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Form, ListGroup, Button } from "react-bootstrap";
 import io from "socket.io-client";
 import { connect } from "react-redux";
+import { setAlert } from "../../actions/alertActions";
 
 import Message from "./Message";
 
-const Chat = ({ handle }) => {
+const Chat = ({ handle, setAlert }) => {
   const inputRef = useRef();
   const socketRef = useRef();
 
@@ -28,12 +29,16 @@ const Chat = ({ handle }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    socketRef.current.emit("message", {
-      name: handle,
-      text: msg,
-      date: new Date(Date.now()),
-    });
-    setMsg("");
+    if (!msg.length) {
+      setAlert(true, `Please enter something`, 2000);
+    } else {
+      socketRef.current.emit("message", {
+        name: handle,
+        text: msg,
+        date: new Date(Date.now()),
+      });
+      setMsg("");
+    }
     inputRef.current.focus();
   };
 
@@ -47,6 +52,7 @@ const Chat = ({ handle }) => {
             value={msg}
             onChange={handleChange}
             ref={inputRef}
+            minLength={1}
           />
         </Form.Group>
         <Button variant="outline-dark" type="submit">
@@ -71,4 +77,4 @@ const mapStateToProps = ({
   },
 }) => ({ handle });
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps, { setAlert })(Chat);

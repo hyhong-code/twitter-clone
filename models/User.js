@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Profile = require("./Profile");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -58,6 +59,13 @@ UserSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   this.passwordChangedAt = new Date(Date.now() - 5000);
+});
+
+// CREATE A PROFILE FOR USER
+UserSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
+  await Profile.create({ user: this._id });
+  next();
 });
 
 // VERIFY USER PASSWORD

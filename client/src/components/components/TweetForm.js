@@ -35,7 +35,7 @@ const TweetForm = ({ createTweet }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="exampleForm.ControlTextarea1">
+      <Form.Group>
         <p className="lead mt-2">Share your thoughts</p>
         <Form.Control
           as="textarea"

@@ -5,7 +5,6 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 
 import { deleteTweet } from "../../actions/tweetActions";
-import example from "../../assets/img/example.jpeg";
 
 const TweetCard = ({ tweet, user, deleteTweet }) => {
   const {
@@ -13,13 +12,14 @@ const TweetCard = ({ tweet, user, deleteTweet }) => {
     createdAt,
     user: { handle, _id },
   } = tweet;
+  console.log(tweet);
 
   return (
     <Card className="mb-3">
       {tweet.photo && (
         <Card.Img
           variant="top"
-          src={process.env.PUBLIC_URL + `uploads/tweets/${tweet.photo}`}
+          src={process.env.PUBLIC_URL + `/uploads/tweets/${tweet.photo}`}
         ></Card.Img>
       )}
       <Card.Body>
