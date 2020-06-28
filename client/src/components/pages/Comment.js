@@ -1,25 +1,46 @@
-import React from "react";
-import { Rol, Col } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 
+import { getComments } from "../../actions/commentAction";
 import CommentTweet from "../components/CommentTweet";
 import CommentForm from "../components/CommentForm";
 import CommentCard from "../components/CommentCard";
+import Spinner from "../layout/Spinner";
 
-const Comment = ({ match, loading, user }) => {
-  return (
-    <Rol>
+const Comment = ({
+  match,
+  loading,
+  user,
+  getComments,
+  commentingTweet,
+  comments,
+}) => {
+  useEffect(() => {
+    getComments(match.params.tweetId);
+  }, []);
+
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Row>
       <Col md={{ span: 8, offset: 2 }}>
-        <CommentTweet tweet={tweet} user={user} />
+        <CommentTweet tweet={commentingTweet} user={user} />
         <CommentForm />
         <div className="px-4">
-          <CommentCard user={uesr} />
+          {comments.map((comment) => (
+            <CommentCard key={comment._id} comment={comment} user={user} />
+          ))}
         </div>
       </Col>
-    </Rol>
+    </Row>
   );
 };
 
-const mapStateToProps = ({ auth: { user }, loading }) => ({ loading, user });
+const mapStateToProps = ({
+  auth: { user },
+  loading,
+  comments: { commentingTweet, comments },
+}) => ({ loading, user, commentingTweet, comments });
 
-export default connect(mapStateToProps)(Comment);
+export default connect(mapStateToProps, { getComments })(Comment);

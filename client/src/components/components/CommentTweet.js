@@ -1,8 +1,11 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Image, Badge, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import Moment from "react-moment";
+import { connect } from "react-redux";
+import { deleteTweet } from "../../actions/tweetActions";
 
-const CommentTweet = ({ tweet, user }) => {
+const CommentTweet = ({ tweet, user, deleteTweet }) => {
   return (
     <Card className="mb-3">
       {tweet.photo && (
@@ -12,7 +15,7 @@ const CommentTweet = ({ tweet, user }) => {
         ></Card.Img>
       )}
       <Card.Body className="py-2">
-        <LinkContainer className="user" to={`/profile/${_id}`}>
+        <LinkContainer className="user" to={`/profile/${user._id}`}>
           <Card.Title>
             <Image
               src={
@@ -23,13 +26,13 @@ const CommentTweet = ({ tweet, user }) => {
               width="35"
               alt="profilePic"
             />
-            @{handle}
+            @{user.handle}
           </Card.Title>
         </LinkContainer>
-        <Card.Text className="my-1 mt-0">{text}</Card.Text>
+        <Card.Text className="my-1 mt-0">{tweet.text}</Card.Text>
         <hr className="my-0" />
         <small className="text-muted d-block">
-          <Moment format="YYYY/MM/DD h:mm">{createdAt}</Moment>
+          <Moment format="YYYY/MM/DD h:mm">{tweet.createdAt}</Moment>
         </small>
         <Badge variant="secondary" className="ml-1">
           Likes {tweet.likes.length}
@@ -37,7 +40,7 @@ const CommentTweet = ({ tweet, user }) => {
         <Badge variant="secondary" className="ml-1">
           Comments {tweet.comments.length}
         </Badge>
-        {user && user.id === _id && (
+        {user && user.id === tweet._id && (
           <Badge
             pill
             variant="danger"
@@ -52,4 +55,4 @@ const CommentTweet = ({ tweet, user }) => {
   );
 };
 
-export default CommentTweet;
+export default connect(null, { deleteTweet })(CommentTweet);

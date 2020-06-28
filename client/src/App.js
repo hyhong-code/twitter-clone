@@ -10,6 +10,7 @@ import Profile from "./components/pages/Profile";
 import Alerts from "./components/layout/Alerts";
 import { loadUser } from "./actions/authActions";
 import PrivateRoute from "./util/PrivateRoute";
+import Comment from "./components/pages/Comment";
 
 const App = ({ loadUser }) => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const App = ({ loadUser }) => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/profile/:id" component={Profile} />
+          <PrivateRoute exact path="/comment/:commentId" component={Comment} />
           <Route render={() => <h1>404 NOT FOUND</h1>} />
         </Switch>
       </Container>

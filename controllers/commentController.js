@@ -24,7 +24,7 @@ exports.createComment = asyncHandler(async (req, res, next) => {
   // POPULAE USER HANDLE
   comment = await comment.execPopulate({
     path: "user",
-    select: "handle",
+    select: "handle photo",
   });
 
   res.status(201).json({
@@ -39,7 +39,7 @@ exports.createComment = asyncHandler(async (req, res, next) => {
 exports.getComments = asyncHandler(async (req, res, next) => {
   const query = Comment.find({ tweet: req.params.tweetId }).populate({
     path: "user",
-    select: "handle",
+    select: "handle photo",
   });
 
   // ENABLE QUERY OPTIONS

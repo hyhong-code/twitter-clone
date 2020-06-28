@@ -50,12 +50,14 @@ const TweetCard = ({ tweet, user, deleteTweet, likeTweet }) => {
             {tweet.likes.length}
           </Badge>
         </Button>
-        <Button className="py-0 ">
-          Comment
-          <Badge variant="secondary" className="ml-1">
-            {tweet.comments.length}
-          </Badge>
-        </Button>
+        <LinkContainer to={`/comments/${tweet._id}`}>
+          <Button className="py-0 ">
+            Comment
+            <Badge variant="secondary" className="ml-1">
+              {tweet.comments.length}
+            </Badge>
+          </Button>
+        </LinkContainer>
         {user && user.id === _id && (
           <Badge
             pill
