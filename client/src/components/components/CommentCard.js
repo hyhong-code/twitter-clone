@@ -2,27 +2,30 @@ import React from "react";
 import { Card, Image, Badge } from "react-bootstrap";
 import Moment from "react-moment";
 import { LinkContainer } from "react-router-bootstrap";
+import { withRouter } from "react-router-dom";
 
-const CommentCard = ({ comment, user }) => {
+const CommentCard = ({ comment, user, history }) => {
+  const handleClick = () => {
+    history.push(`profile/${user.id}`);
+  };
+  console.log("**********", user);
   return (
     <Card className="mb-3">
-      )}
       <Card.Body className="py-2">
-        <LinkContainer className="user" to={`/profile/${user._id}`}>
-          <Card.Title>
-            <Image
-              src={
-                process.env.PUBLIC_URL +
-                `/uploads/users/${comment.profile.photo}`
-              }
-              className="mr-2"
-              roundedCircle
-              width="35"
-              alt="profilePic"
-            />
-            @{user.handle}
-          </Card.Title>
-        </LinkContainer>
+        {/* <LinkContainer className="user" to={`/profile/${user._id}`}> */}
+        <Card.Title onClick={handleClick}>
+          <Image
+            src={
+              process.env.PUBLIC_URL + `/uploads/users/${comment.profile.photo}`
+            }
+            className="mr-2"
+            roundedCircle
+            width="35"
+            alt="profilePic"
+          />
+          @{user.handle}
+        </Card.Title>
+        {/* </LinkContainer> */}
         <Card.Text className="my-1 mt-0">{comment.text}</Card.Text>
         <hr className="my-0" />
         <small className="text-muted d-block">
@@ -43,4 +46,4 @@ const CommentCard = ({ comment, user }) => {
   );
 };
 
-export default CommentCard;
+export default withRouter(CommentCard);
