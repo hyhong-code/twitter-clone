@@ -2,6 +2,7 @@ const Tweet = require("../models/Tweet");
 const asyncHandler = require("../utils/asyncHandler");
 const CustomError = require("../utils/customError.js");
 const QueryOptions = require("../utils/queryOptions");
+const Profile = require("../models/Profile");
 const path = require("path");
 const sharp = require("sharp");
 

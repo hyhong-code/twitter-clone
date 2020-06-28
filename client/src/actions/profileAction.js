@@ -13,6 +13,9 @@ export const getProfile = (id) => async (dispatch) => {
   dispatch({
     type: CLEAR_TWEETS,
   });
+  dispatch({
+    type: CLEAR_PROFILE,
+  });
   try {
     const respProfile = await axios.get(`/api/v1/users/${id}/profile`);
     dispatch({
