@@ -20,6 +20,14 @@ const TweetSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  likes: {
+    type: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+  },
 });
 
 TweetSchema.pre(/^find/, function (next) {
