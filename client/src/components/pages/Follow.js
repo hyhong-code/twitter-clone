@@ -3,9 +3,29 @@ import { Row, Col, ListGroup, Image, Button, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { getFollow } from "../../actions/profileAction";
+import { setChatTarget, clearChatTarget } from "../../actions/chatActions";
 import Spinner from "../layout/Spinner";
+import ChatModal from "../components/ChatModal";
 
-const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
+const Follow = ({
+  match,
+  history,
+  loading,
+  profile,
+  getFollow,
+  socket,
+  setChatTarget,
+}) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    clearChatTarget();
+    setShow(false);
+  };
+  const handleShow = (targetUser) => {
+    setChatTarget(targetUser);
+    setShow(true);
+  };
+
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
@@ -21,18 +41,11 @@ const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
     });
   }, []);
 
-  const handleClick = () => {};
-
   const userListItem = (follower) =>
     !loading &&
     follower &&
     follower.user && (
-      <ListGroup.Item
-        key={follower._id}
-        className="py-1"
-        action
-        onClick={handleClick}
-      >
+      <ListGroup.Item key={follower._id} className="py-1">
         <Image
           src={process.env.PUBLIC_URL + `/uploads/users/${follower.photo}`}
           width="35"
@@ -40,9 +53,17 @@ const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
         />
         <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
         {onlineUsers.includes(follower.user._id) && (
-          <Badge className="ml-2" variant="success">
-            Online
-          </Badge>
+          <Fragment>
+            <Badge className="ml-2" variant="success">
+              Online
+            </Badge>
+            <span className="text-primary ml-1">
+              <i
+                onClick={() => handleShow(follower.user)}
+                className="fas fa-comment fa-2x"
+              ></i>
+            </span>
+          </Fragment>
         )}
       </ListGroup.Item>
     );
@@ -84,6 +105,7 @@ const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
           </div>
         </Col>
       </Row>
+      <ChatModal show={show} handleClose={handleClose} />
     </Fragment>
   ) : (
     <Spinner />
@@ -96,4 +118,8 @@ const mapStateToProps = ({ loading, profile, socket }) => ({
   socket,
 });
 
-export default connect(mapStateToProps, { getFollow })(Follow);
+export default connect(mapStateToProps, {
+  getFollow,
+  setChatTarget,
+  clearChatTarget,
+})(Follow);

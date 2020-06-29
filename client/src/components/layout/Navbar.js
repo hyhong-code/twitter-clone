@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
@@ -7,11 +7,8 @@ import { logout } from "../../actions/authActions";
 import ChatModal from "../components/ChatModal";
 import RouterNavLink from "../layout/RouterNavLink";
 
-const _Navbar = ({ logout, isAuthenticated, user }) => {
+const _Navbar = ({ logout, isAuthenticated, user, socket }) => {
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const guestLinks = () => (
     <Fragment>
@@ -61,14 +58,14 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <ChatModal show={show} handleClose={handleClose} />
     </Fragment>
   );
 };
 
-const mapStateToProps = ({ auth: { isAuthenticated, user } }) => ({
+const mapStateToProps = ({ auth: { isAuthenticated, user }, socket }) => ({
   isAuthenticated,
   user,
+  socket,
 });
 
 export default connect(mapStateToProps, { logout })(_Navbar);

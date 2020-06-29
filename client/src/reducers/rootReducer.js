@@ -6,6 +6,7 @@ import loading from "./loadingReducrer";
 import profile from "./profileReducer";
 import comments from "./commentReducer";
 import socket from "./socketReducer.js";
+import chat from "./chatReducer";
 
 export default combineReducers({
   auth,
@@ -15,4 +16,5 @@ export default combineReducers({
   profile,
   comments,
   socket,
+  chat,
 });

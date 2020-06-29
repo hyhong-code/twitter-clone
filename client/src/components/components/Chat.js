@@ -2,27 +2,28 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Form, ListGroup, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alertActions";
-import io from "socket.io-client";
 
 import Message from "./Message";
 
-const Chat = ({ handle, setAlert }) => {
-  const socketRef = useRef();
+const Chat = ({ handle, setAlert, chatTarget, socket, id }) => {
   const inputRef = useRef();
   const chatBoardRef = useRef();
 
   const [msg, setMsg] = useState("");
   const [chats, setChats] = useState([]);
 
-  useEffect(() => {
-    socketRef.current = io("/");
+  // const socketRef = useRef();
 
-    socketRef.current.on("message", (message) => {
-      console.log(message);
+  useEffect(() => {
+    // socketRef.current = socket;
+    socket.emit("startChat", {
+      selfId: id,
+      targetId: chatTarget._id,
+      targetHandle: chatTarget.handle,
+    });
+    socket.on("message", (message) => {
       setChats((prev) => [...prev, message]);
     });
-
-    return () => socketRef.current.disconnect();
   }, []);
 
   useEffect(() => {
@@ -39,10 +40,9 @@ const Chat = ({ handle, setAlert }) => {
     if (!msg.length) {
       setAlert(true, `Please enter something`, 2000);
     } else {
-      socketRef.current.emit("message", {
+      socket.emit("message", {
         name: handle,
         text: msg,
-        date: new Date(Date.now()),
       });
       setMsg("");
     }
@@ -80,8 +80,10 @@ const Chat = ({ handle, setAlert }) => {
 
 const mapStateToProps = ({
   auth: {
-    user: { handle },
+    user: { handle, id },
   },
-}) => ({ handle });
+  chat: { chatTarget },
+  socket,
+}) => ({ handle, chatTarget, socket, id });
 
 export default connect(mapStateToProps, { setAlert })(Chat);

@@ -1,7 +1,5 @@
 let CONNECTED_USERS = [];
-
 const CHAT_BOT = "$chat$admin";
-const ROOM_PREFIX = "$room$";
 
 const connectSocket = (io) => {
   console.log(`Socket.io connected...`);
@@ -9,9 +7,11 @@ const connectSocket = (io) => {
   // RUN WHEN A NEW CLIENT CONNECTS
   io.on("connection", (socket) => {
     console.log("a user connected");
+    let chatTarget;
 
+    // HANDLE TRACKING ONLINE USERS
     socket.on("userConnected", (userId) => {
-      // PUSH USER INTO CONNECTED USER LIST
+      // PUSH USER INTO linline USER LIST
       CONNECTED_USERS.push({
         userId,
         socketId: socket.id,
@@ -31,31 +31,37 @@ const connectSocket = (io) => {
         "onlineUsersUpdate",
         CONNECTED_USERS.map((user) => user.userId)
       );
-      console.log(
-        "server",
-        CONNECTED_USERS.map((user) => user.userId)
-      );
     });
 
-    // // EMIT TO THIS SOCKET
-    // socket.emit("message", {
-    //   name: CHAT_BOT,
-    //   text: "Welcome to the chat!",
-    //   date: new Date(Date.now()),
-    // });
+    // HANDLE STARITING A CHAT SESSION
+    socket.on("startChat", ({ selfId, targetId, targetHandle }) => {
+      // SET CHAT TARGET
+      chatTarget = CONNECTED_USERS.find((user) => user.userId === targetId)
+        .socketId;
 
-    // // BROADCASE TO ALL EXCEPT FOR THIS SOCKET
-    // socket.broadcast.emit("message", {
-    //   name: CHAT_BOT,
-    //   text: "A user has joined",
-    //   date: new Date(Date.now()),
-    // });
+      // SEND WELCOME MESSAGE
+      socket.emit("message", {
+        name: CHAT_BOT,
+        text: `You are chatting with @${targetHandle}`,
+        date: new Date(Date.now()),
+      });
+    });
 
-    // // RUNS WHEN SERVER RECEIVES A MESSAGE
-    // socket.on("message", ({ name, text, date }) => {
-    //   // EMIT TO ALL SOCKETS
-    //   io.emit("message", { name, text, date });
-    // });
+    // HANDLE RECEIVING AND SENDING MESSAGE
+    socket.on("message", ({ name, text }) => {
+      console.log(chatTarget);
+      const msg = {
+        name,
+        text,
+        date: new Date(Date.now()),
+      };
+
+      // TO SELF
+      socket.emit("message", msg);
+
+      // TO TARGET
+      io.to(chatTarget).emit("message", msg);
+    });
 
     // RUNS WHEN CLIENT DISCONNECTS
     socket.on("disconnect", () => {
@@ -72,12 +78,6 @@ const connectSocket = (io) => {
         "onlineUsersUpdate",
         CONNECTED_USERS.map((user) => user.userId)
       );
-
-      // io.emit("message", {
-      //   name: CHAT_BOT,
-      //   text: "A user has left the chat",
-      //   date: new Date(Date.now()),
-      // });
     });
   });
 };
