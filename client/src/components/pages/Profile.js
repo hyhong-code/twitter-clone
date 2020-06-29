@@ -3,7 +3,7 @@ import { Row, Col, Button, Image, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import TweetCard from "../components/TweetCard";
-import { getProfile, follow } from "../../actions/profileAction";
+import { getProfile, follow, unfollow } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 import EditProfileModal from "../components/EditProfileModal";
 
@@ -12,6 +12,7 @@ const Profile = ({
   history,
   getProfile,
   follow,
+  unfollow,
   tweets,
   user,
   profile,
@@ -86,7 +87,9 @@ const Profile = ({
           Follow
         </Button>
       ) : (
-        <Button variant="warning">Unfolow</Button>
+        <Button onClick={() => unfollow(profile.user._id)} variant="warning">
+          Unfolow
+        </Button>
       ))
     );
   };
@@ -116,4 +119,6 @@ const mapStateToProps = ({ tweets, auth: { user }, loading, profile }) => ({
   profile,
 });
 
-export default connect(mapStateToProps, { getProfile, follow })(Profile);
+export default connect(mapStateToProps, { getProfile, follow, unfollow })(
+  Profile
+);

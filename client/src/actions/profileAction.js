@@ -62,11 +62,23 @@ export const updateProfile = (formData) => async (dispatch) => {
 
 export const follow = (userId) => async (dispatch) => {
   try {
-    console.log(userId);
     const resp = await axios.patch(`/api/v1/users/${userId}/profile/follow`);
     console.log(resp.data);
     dispatch({
       type: PROFILE_FOLLOWED,
+      payload: resp.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unfollow = (userId) => async (dispatch) => {
+  try {
+    const resp = await axios.patch(`/api/v1/users/${userId}/profile/unfollow`);
+    console.log(resp.data);
+    dispatch({
+      type: PROFILE_UNFOLLOWED,
       payload: resp.data.data,
     });
   } catch (error) {

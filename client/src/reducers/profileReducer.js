@@ -3,6 +3,7 @@ import {
   CLEAR_PROFILE,
   PROFILE_UPDATED,
   PROFILE_FOLLOWED,
+  PROFILE_UNFOLLOWED,
 } from "../actions/actionTypes";
 
 const INITIAL_STATE = null;
@@ -12,8 +13,8 @@ const profileReducer = (state = INITIAL_STATE, action) => {
   switch (type) {
     case GET_PROFILE:
     case PROFILE_UPDATED:
-      return { ...payload.profile };
     case PROFILE_FOLLOWED:
+    case PROFILE_UNFOLLOWED:
       return { ...payload.profile };
     case CLEAR_PROFILE:
       return null;
