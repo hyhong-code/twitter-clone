@@ -24,7 +24,7 @@ const ProfileSchema = new mongoose.Schema({
     type: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "User",
+        ref: "Profile",
       },
     ],
   },
@@ -32,10 +32,19 @@ const ProfileSchema = new mongoose.Schema({
     type: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "User",
+        ref: "Profile",
       },
     ],
   },
+});
+
+// POPULATE USER HANDLE
+ProfileSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "user",
+    select: "handle",
+  });
+  next();
 });
 
 module.exports = mongoose.model("Profile", ProfileSchema);

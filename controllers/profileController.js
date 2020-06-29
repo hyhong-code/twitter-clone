@@ -15,10 +15,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
       new: true,
       runValidators: true,
     }
-  ).populate({
-    path: "user",
-    select: "handle",
-  });
+  );
 
   // HANDLE PROFILE PICTURE
   if (req.files && req.files.file) {
@@ -43,10 +40,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @ROUTE    GET /api/v1/users/:userId/profile/
 // @ACCESS   PRIVATE
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
-  const profile = await Profile.findOne({ user: req.params.userId }).populate({
-    path: "user",
-    select: "handle",
-  });
+  const profile = await Profile.findOne({ user: req.params.userId });
 
   // HANDLE PROFILE NOT EXIST
   if (!profile) {
@@ -74,13 +68,13 @@ exports.follow = asyncHandler(async (req, res, next) => {
   }
 
   // HANDLE ALREADY FOLLOW USER
-  if (profile.followers.includes(req.user.id)) {
+  if (profile.followers.includes(myProfile._id)) {
     return next(new CustomError(`You are already following this user`, 400));
   }
 
   // FOLLOW THE USER
-  profile.followers.unshift(req.user.id);
-  myProfile.following.unshift(req.params.userId);
+  profile.followers.unshift(myProfile._id);
+  myProfile.following.unshift(profile._id);
   await profile.save({ validateBeforeSave: true });
   await myProfile.save({ validateBeforeSave: true });
 
@@ -103,16 +97,16 @@ exports.unfollow = asyncHandler(async (req, res, next) => {
   }
 
   // HANDLE ALREADY FOLLOW USER
-  if (!profile.followers.includes(req.user.id)) {
+  if (!profile.followers.includes(myProfile._id)) {
     return next(new CustomError(`You are now yet following this user`, 400));
   }
 
   // UNFOLLOW THE USER
   profile.followers = profile.followers.filter(
-    (follower) => follower.toString() !== req.user.id
+    (follower) => follower.toString() !== myProfile._id.toString()
   );
   myProfile.following = myProfile.following.filter(
-    (following) => following.toString() !== req.params.userId
+    (following) => following.toString() !== profile._id.toString()
   );
   await profile.save({ validateBeforeSave: true });
   await myProfile.save({ validateBeforeSave: true });
@@ -120,5 +114,26 @@ exports.unfollow = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { profile },
+  });
+});
+
+// @DESC     GET FOLLOWING AND FOLLOWERS
+// @ROUTE    GET /api/v1/profile/:profileId
+// @ACCESS   PRIVATE
+exports.getFollow = asyncHandler(async (req, res, next) => {
+  let profile = await Profile.findById(req.params.profileId);
+
+  // HANDLE PROFILE NOT EXIST
+  if (!profile) {
+    return next(
+      new CustomError(`No such profile with id ${req.params.profileId}`, 404)
+    );
+  }
+
+  profile = await profile.execPopulate("followers following");
+
+  res.status(200).json({
+    status: "success",
+    data: profile,
   });
 });
