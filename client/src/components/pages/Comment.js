@@ -29,7 +29,7 @@ const Comment = ({
         </Button>
         <CommentTweet tweet={commentingTweet} user={user} />
         <CommentForm />
-        <div className="px-4">
+        <div className="px-4 py-2">
           {comments.map((comment) => (
             <CommentCard key={comment._id} comment={comment} user={user} />
           ))}

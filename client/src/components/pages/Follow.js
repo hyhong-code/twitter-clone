@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { getFollow } from "../../actions/profileAction";
 import { setChatTarget, clearChatTarget } from "../../actions/chatActions";
+import { setAlert } from "../../actions/alertActions";
 import Spinner from "../layout/Spinner";
 import ChatModal from "../components/ChatModal";
 
@@ -16,6 +17,7 @@ const Follow = ({
   socket,
   setChatTarget,
   clearChatTarget,
+  setAlert,
 }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -52,7 +54,7 @@ const Follow = ({
           rounded
         />
         <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
-        {onlineUsers.includes(follower.user._id) && (
+        {onlineUsers.includes(follower.user._id) ? (
           <Fragment>
             <Badge className="ml-2" variant="success">
               Online
@@ -60,7 +62,21 @@ const Follow = ({
             <span className="text-primary ml-1">
               <i
                 onClick={() => handleShow(follower.user)}
-                className="fas fa-comment fa-2x"
+                className="fas fa-comment fa-2x chatIcon"
+              ></i>
+            </span>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Badge className="ml-2" variant="danger">
+              Offline
+            </Badge>
+            <span className="text-primary ml-1">
+              <i
+                onClick={() =>
+                  setAlert(true, `User offline, cannot chat`, 3000)
+                }
+                className="fas fa-comment fa-2x chatIcon text-secondary"
               ></i>
             </span>
           </Fragment>
@@ -122,4 +138,5 @@ export default connect(mapStateToProps, {
   getFollow,
   setChatTarget,
   clearChatTarget,
+  setAlert,
 })(Follow);

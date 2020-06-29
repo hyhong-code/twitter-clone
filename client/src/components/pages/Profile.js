@@ -88,11 +88,11 @@ const Profile = ({
       profile.user._id !== user.id &&
       (!profile.followers.includes(user.profile._id) ? (
         <Button onClick={() => follow(profile.user._id)} variant="info">
-          Follow
+          <i className="fas fa-user-plus"></i> Follow
         </Button>
       ) : (
         <Button onClick={() => unfollow(profile.user._id)} variant="warning">
-          Unfolow
+          <i className="fas fa-user-minus"></i> Unfolow
         </Button>
       ))
     );
@@ -123,6 +123,8 @@ const mapStateToProps = ({ tweets, auth: { user }, loading, profile }) => ({
   profile,
 });
 
-export default connect(mapStateToProps, { getProfile, follow, unfollow })(
-  Profile
-);
+export default connect(mapStateToProps, {
+  getProfile,
+  follow,
+  unfollow,
+})(Profile);

@@ -44,8 +44,8 @@ const TweetForm = ({ createTweet }) => {
           ref={inputRef}
         />
       </Form.Group>
-      <div className="d-flex align-items-center">
-        <Button vatiant="primary" className="mr-2 px-4" type="submit">
+      <div className="d-flex align-items-center justify-content-between">
+        <Button vatiant="primary" type="submit" className="px-4 mr-2">
           Share
         </Button>
         <Form.File

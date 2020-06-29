@@ -81,6 +81,14 @@ textarea {
   }
 }
 
+.chatIcon {
+  transition: transform 0.2s ease-in;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
 @media (max-width: 768px) {
   .pt-6 {
     padding-top: 4rem;

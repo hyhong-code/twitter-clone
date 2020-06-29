@@ -10,10 +10,10 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
   const guestLinks = () => (
     <Fragment>
       <RouterNavLink exact to="/signup">
-        Signup
+        <i className="fas fa-user-plus"></i> Signup
       </RouterNavLink>
       <RouterNavLink exact to="/login">
-        Login
+        <i className="fas fa-key"></i> Login
       </RouterNavLink>
     </Fragment>
   );
@@ -21,16 +21,18 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
   const authLinks = () => (
     <Fragment>
       <RouterNavLink exact to="/">
-        Home
+        <i className="fas fa-home"></i> Home
       </RouterNavLink>
       <RouterNavLink exact to={`/profile/${user.id}`}>
-        Profile
+        <i className="fas fa-id-badge"></i> Profile
       </RouterNavLink>
       {/* <Nav.Link onClick={handleShow}>Chat</Nav.Link> */}
       <RouterNavLink exact to={`/follow/${user.profile._id}`}>
-        Message
+        <i className="far fa-comment"></i> Message
       </RouterNavLink>
-      <Nav.Link onClick={logout}>Logout</Nav.Link>
+      <Nav.Link onClick={logout}>
+        <i className="fas fa-sign-out-alt"></i> Logout
+      </Nav.Link>
     </Fragment>
   );
 

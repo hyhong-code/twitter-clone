@@ -45,14 +45,14 @@ const TweetCard = ({ tweet, user, deleteTweet, likeTweet }) => {
           className={`py-0 mr-2 ${tweet.likes.includes(user.id) && "disabled"}`}
           onClick={() => likeTweet(tweet._id)}
         >
-          Like
+          <i className="far fa-heart"></i> Like
           <Badge variant="secondary" className="ml-1">
             {tweet.likes.length}
           </Badge>
         </Button>
         <LinkContainer to={`/comments/${tweet._id}`}>
           <Button className="py-0 ">
-            Comment
+            <i className="far fa-comment"></i> Comment
             <Badge variant="secondary" className="ml-1">
               {tweet.comments.length}
             </Badge>

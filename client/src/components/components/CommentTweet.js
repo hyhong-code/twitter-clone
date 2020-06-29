@@ -38,10 +38,10 @@ const CommentTweet = ({ tweet, user, deleteTweet }) => {
             <Moment format="YYYY/MM/DD h:mm">{tweet.createdAt}</Moment>
           </small>
           <Badge variant="secondary" className="ml-1">
-            Likes {tweet.likes.length}
+            <i className="far fa-heart"></i> Likes {tweet.likes.length}
           </Badge>
           <Badge variant="secondary" className="ml-1">
-            Comments {tweet.comments.length}
+            <i className="far fa-comment"></i> Comments {tweet.comments.length}
           </Badge>
           {user && user.id === tweet._id && (
             <Badge

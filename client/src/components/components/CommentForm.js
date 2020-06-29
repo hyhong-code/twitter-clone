@@ -22,7 +22,7 @@ const CommentForm = ({ createComment, commentingTweet }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <p className="lead mt-2">Comment:</p>
+        <p className="lead mt-2">Add a comment:</p>
         <Form.Control
           as="textarea"
           rows="2"
