@@ -1,15 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 
 import { logout } from "../../actions/authActions";
-import ChatModal from "../components/ChatModal";
 import RouterNavLink from "../layout/RouterNavLink";
 
-const _Navbar = ({ logout, isAuthenticated, user, socket }) => {
-  const [show, setShow] = useState(false);
-
+const _Navbar = ({ logout, isAuthenticated, user }) => {
   const guestLinks = () => (
     <Fragment>
       <RouterNavLink exact to="/signup">
@@ -62,10 +59,9 @@ const _Navbar = ({ logout, isAuthenticated, user, socket }) => {
   );
 };
 
-const mapStateToProps = ({ auth: { isAuthenticated, user }, socket }) => ({
+const mapStateToProps = ({ auth: { isAuthenticated, user } }) => ({
   isAuthenticated,
   user,
-  socket,
 });
 
 export default connect(mapStateToProps, { logout })(_Navbar);

@@ -2,8 +2,9 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 import Chat from "./Chat";
+import { connect } from "react-redux";
 
-const ChatModal = ({ show, handleClose }) => {
+const ChatModal = ({ show, handleClose, chatTarget }) => {
   return (
     <Modal
       className="chatModal"
@@ -13,7 +14,9 @@ const ChatModal = ({ show, handleClose }) => {
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Chat Room</Modal.Title>
+        {chatTarget && (
+          <Modal.Title>Chat with @{chatTarget.handle}</Modal.Title>
+        )}
       </Modal.Header>
       <Modal.Body>
         <Chat />
@@ -27,4 +30,6 @@ const ChatModal = ({ show, handleClose }) => {
   );
 };
 
-export default ChatModal;
+const mapStateToProps = ({ chat: { chatTarget } }) => ({ chatTarget });
+
+export default connect(mapStateToProps)(ChatModal);

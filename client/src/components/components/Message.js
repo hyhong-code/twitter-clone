@@ -3,12 +3,13 @@ import { ListGroup } from "react-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 
+const CHAT_BOT = "$chat$admin";
+
 const Message = ({ chat: { name, text, date }, handle }) => {
-  console.log(name);
   return (
     <ListGroup.Item>
       <div className={`${handle === name ? "text-right" : ""}`}>
-        {name !== "$chat$admin" && <p className="message-user">@{name}</p>}
+        {name !== CHAT_BOT && <p className="message-user">@{name}</p>}
         <p className="message">{text}</p>
         <small className="text-muted text-nowrap">
           <Moment format="h:mm:ss a">{date}</Moment>

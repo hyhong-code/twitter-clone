@@ -39,7 +39,7 @@ const Follow = ({
     socket.on("onlineUsersUpdate", (users) => {
       setOnlineUsers(users);
     });
-  }, []);
+  }, [socket]);
 
   const userListItem = (follower) =>
     !loading &&
