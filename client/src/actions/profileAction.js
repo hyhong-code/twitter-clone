@@ -89,6 +89,7 @@ export const unfollow = (userId) => async (dispatch) => {
 
 export const getFollow = (profileId) => async (dispatch) => {
   dispatch(setLoading());
+  dispatch({ type: CLEAR_PROFILE });
   try {
     const resp = await axios.get(`/api/v1/profile/${profileId}`);
     console.log(resp.data);

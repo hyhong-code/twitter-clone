@@ -33,7 +33,7 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
         Profile
       </RouterNavLink>
       {/* <Nav.Link onClick={handleShow}>Chat</Nav.Link> */}
-      <RouterNavLink exact to={`follow/${user.profile._id}`}>
+      <RouterNavLink exact to={`/follow/${user.profile._id}`}>
         Message
       </RouterNavLink>
       <Nav.Link onClick={logout}>Logout</Nav.Link>

@@ -10,16 +10,19 @@ const Follow = ({ match, loading, profile, getFollow }) => {
     getFollow(match.params.profileId);
   }, [getFollow, match]);
 
-  const userListItem = (follower) => (
-    <ListGroup.Item key={follower._id} className="py-1" action>
-      <Image
-        src={process.env.PUBLIC_URL + `/uploads/users/${follower.photo}`}
-        width="35"
-        rounded
-      />
-      <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
-    </ListGroup.Item>
-  );
+  const userListItem = (follower) =>
+    !loading &&
+    follower &&
+    follower.user && (
+      <ListGroup.Item key={follower._id} className="py-1" action>
+        <Image
+          src={process.env.PUBLIC_URL + `/uploads/users/${follower.photo}`}
+          width="35"
+          rounded
+        />
+        <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
+      </ListGroup.Item>
+    );
 
   return !loading && profile && match ? (
     <Row className="pt-6">

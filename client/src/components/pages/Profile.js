@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { Row, Col, Button, Image, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
 
 import TweetCard from "../components/TweetCard";
 import { getProfile, follow, unfollow } from "../../actions/profileAction";
@@ -69,12 +70,16 @@ const Profile = ({
 
   const followSection = () => (
     <div className="mb-3">
-      <Badge pill variant="primary" className="mr-2">
-        {profile.followers.length} followers
-      </Badge>
-      <Badge pill variant="secondary">
-        {profile.following.length} following
-      </Badge>
+      <LinkContainer className="user" exact to={`/follow/${profile._id}`}>
+        <div>
+          <Badge pill variant="primary" className="mr-2">
+            {profile.followers.length} followers
+          </Badge>
+          <Badge pill variant="secondary">
+            {profile.following.length} following
+          </Badge>
+        </div>
+      </LinkContainer>
     </div>
   );
 
