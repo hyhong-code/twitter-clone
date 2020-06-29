@@ -12,7 +12,6 @@ const { setTokenHeader } = require("../util/auth");
 const INITIAL_STATE = {
   isAuthenticated: false,
   user: null,
-  socket: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -26,8 +25,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: payload.user,
-        socket: payload.socket,
+        ...payload,
       };
     case LOGIN_FAILED:
     case SIGNUP_FAILED:
@@ -35,8 +33,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case LOGOUT:
       localStorage.removeItem("jwtToken");
       setTokenHeader(false);
-      state.socket && state.socket.disconnect();
-      return { ...state, isAuthenticated: false, user: null, socket: null };
+      return { ...state, isAuthenticated: false, user: null };
     default:
       return state;
   }

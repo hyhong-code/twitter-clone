@@ -5,6 +5,7 @@ import alerts from "./alertReducer";
 import loading from "./loadingReducrer";
 import profile from "./profileReducer";
 import comments from "./commentReducer";
+import socket from "./socketReducer.js";
 
 export default combineReducers({
   auth,
@@ -13,4 +14,5 @@ export default combineReducers({
   loading,
   profile,
   comments,
+  socket,
 });

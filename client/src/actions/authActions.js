@@ -1,5 +1,3 @@
-import io from "socket.io-client";
-
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -13,6 +11,7 @@ import axios from "axios";
 
 import { setTokenHeader } from "../util/auth";
 import { setAlert } from "./alertActions";
+import { connectSocket } from "./socketActions";
 
 const config = {
   headers: {
@@ -57,17 +56,11 @@ export const loadUser = () => async (dispatch) => {
   try {
     setTokenHeader(localStorage.jwtToken);
     const resp = await axios.get("/api/v1/users/loadMe");
-
-    // CONNECT TO SOCKET UPON LOADED
-    const socket = io("/");
-    socket.emit("userConnected", resp.data.data.user.handle);
     dispatch({
       type: USER_LOADED,
-      payload: {
-        user: resp.data.data.user,
-        socket,
-      },
+      payload: resp.data.data,
     });
+    dispatch(connectSocket(resp.data.data.user.id));
     dispatch(setAlert(false, `Welcome, ${resp.data.data.user.handle}`, 3000));
   } catch (error) {
     console.log(error);

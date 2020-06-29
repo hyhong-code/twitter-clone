@@ -10,10 +10,10 @@ const connectSocket = (io) => {
   io.on("connection", (socket) => {
     console.log("a user connected");
 
-    socket.on("userConnected", (handle) => {
+    socket.on("userConnected", (userId) => {
       // PUSH USER INTO CONNECTED USER LIST
       CONNECTED_USERS.push({
-        handle,
+        userId,
         socketId: socket.id,
       });
       console.log(CONNECTED_USERS);
@@ -21,7 +21,7 @@ const connectSocket = (io) => {
       // HANDLE A NEW USER ONLINE
       socket.broadcast.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.handle)
+        CONNECTED_USERS.map((user) => user.userId)
       );
     });
 
@@ -29,7 +29,11 @@ const connectSocket = (io) => {
     socket.on("getOnlineUser", () => {
       socket.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.handle)
+        CONNECTED_USERS.map((user) => user.userId)
+      );
+      console.log(
+        "server",
+        CONNECTED_USERS.map((user) => user.userId)
       );
     });
 
@@ -66,7 +70,7 @@ const connectSocket = (io) => {
       // HANDLE A USER LOGOFF
       socket.broadcast.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.handle)
+        CONNECTED_USERS.map((user) => user.userId)
       );
 
       // io.emit("message", {

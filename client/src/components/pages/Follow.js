@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import { getFollow } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 
-const Follow = ({ match, history, loading, profile, getFollow, auth }) => {
-  const socketRef = useRef();
-
+const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
@@ -15,9 +13,9 @@ const Follow = ({ match, history, loading, profile, getFollow, auth }) => {
   }, [getFollow, match]);
 
   useEffect(() => {
-    auth.socket.emit("getOnlineUser");
+    socket.emit("getOnlineUser");
 
-    auth.socket.on("onlineUsersUpdate", (users) => {
+    socket.on("onlineUsersUpdate", (users) => {
       console.log(users);
       setOnlineUsers(users);
     });
@@ -90,10 +88,10 @@ const Follow = ({ match, history, loading, profile, getFollow, auth }) => {
   );
 };
 
-const mapStateToProps = ({ loading, profile, auth }) => ({
+const mapStateToProps = ({ loading, profile, socket }) => ({
   loading,
   profile,
-  auth,
+  socket,
 });
 
 export default connect(mapStateToProps, { getFollow })(Follow);
