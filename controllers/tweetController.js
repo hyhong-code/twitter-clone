@@ -61,12 +61,18 @@ exports.createTweet = asyncHandler(async (req, res, next) => {
   // HANDLE PHOTO UPLOAD
   if (req.files && req.files.file) {
     const fileName = `tweet-${tweet._id}.jpeg`;
+    const filePath =
+      process.env.NODE_ENV === "production"
+        ? path.resolve(
+            `${__dirname}/../client/public/uploads/users/${fileName}`
+          )
+        : path.resolve(
+            `${__dirname}/../client/build/public/uploads/users/${fileName}`
+          );
     await sharp(req.files.file.data)
       .resize(1024, 576)
       .jpeg()
-      .toFile(
-        path.resolve(`${__dirname}/../client/public/uploads/tweets/${fileName}`)
-      );
+      .toFile(path.resolve(filePath));
 
     // UPDATAE FILENAME TO DB
     tweet.photo = fileName;
