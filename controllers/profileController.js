@@ -39,7 +39,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @DESC     UPDATE A USER'S PROFILE
+// @DESC     GET A USER'S PROFILE
 // @ROUTE    GET /api/v1/users/:userId/profile/
 // @ACCESS   PRIVATE
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
@@ -54,6 +54,35 @@ exports.getUserProfile = asyncHandler(async (req, res, next) => {
       new CustomError(`No such profile with user id ${req.params.userId}`, 404)
     );
   }
+
+  res.status(200).json({
+    status: "success",
+    data: { profile },
+  });
+});
+
+// @DESC     GET A USER'S PROFILE
+// @ROUTE    PATCH /api/v1/users/:userId/profile/follow
+// @ACCESS   PRIVATE
+exports.follow = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.params.userId });
+  const myProfile = await Profile.findOne({ user: req.user.id });
+
+  // HANDLE USER PROFILE NOT EXIST
+  if (!profile) {
+    return next(new CustomError(`No user with id ${req.params.userId}`, 404));
+  }
+
+  // HANDLE ALREADY FOLLOW USER
+  if (profile.followers.includes(req.user.id)) {
+    return next(new CustomError(`You are already following this user`, 400));
+  }
+
+  // FOLLOW THE USER
+  profile.followers.unshift(req.user.id);
+  myProfile.following.unshift(req.params.userId);
+  await profile.save({ validateBeforeSave: true });
+  await myProfile.save({ validateBeforeSave: true });
 
   res.status(200).json({
     status: "success",

@@ -28,7 +28,7 @@ const ProfileSchema = new mongoose.Schema({
       },
     ],
   },
-  followedBy: {
+  following: {
     type: [
       {
         type: mongoose.Schema.ObjectId,
