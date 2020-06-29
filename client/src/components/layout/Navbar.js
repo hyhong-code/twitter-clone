@@ -32,7 +32,8 @@ const _Navbar = ({ logout, isAuthenticated, user }) => {
       <RouterNavLink exact to={`/profile/${user.id}`}>
         Profile
       </RouterNavLink>
-      <Nav.Link onClick={handleShow}>Chat</Nav.Link>
+      {/* <Nav.Link onClick={handleShow}>Chat</Nav.Link> */}
+      <RouterNavLink exact to="/follow"></RouterNavLink>
       <Nav.Link onClick={logout}>Logout</Nav.Link>
     </Fragment>
   );
