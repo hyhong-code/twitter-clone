@@ -7,6 +7,8 @@ import {
   GET_USER_TWEETS,
   CLEAR_TWEETS,
   PROFILE_UPDATED,
+  PROFILE_FOLLOWED,
+  PROFILE_UNFOLLOWED,
 } from "./actionTypes";
 
 export const getProfile = (id) => async (dispatch) => {
@@ -55,5 +57,19 @@ export const updateProfile = (formData) => async (dispatch) => {
     console.log(error);
     dispatch(setAlert(true, error.response.data.message));
     return false;
+  }
+};
+
+export const follow = (userId) => async (dispatch) => {
+  try {
+    console.log(userId);
+    const resp = await axios.patch(`/api/v1/users/${userId}/profile/follow`);
+    console.log(resp.data);
+    dispatch({
+      type: PROFILE_FOLLOWED,
+      payload: resp.data.data,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

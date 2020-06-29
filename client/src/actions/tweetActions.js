@@ -17,10 +17,12 @@ export const getTweets = () => async (dispatch) => {
   });
   try {
     const resp = await axios.get("/api/v1/tweets?sort=-createdAt");
+    console.log(resp.data); // ********************************************
     dispatch({
       type: GET_TWEETS,
       payload: resp.data.data,
     });
+    console.log(resp.data);
   } catch (error) {
     console.log(error);
     dispatch(setAlert(true, error.response.data.message));

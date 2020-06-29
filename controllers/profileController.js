@@ -59,13 +59,19 @@ exports.getUserProfile = asyncHandler(async (req, res, next) => {
 // @ROUTE    PATCH /api/v1/users/:userId/profile/follow
 // @ACCESS   PRIVATE
 exports.follow = asyncHandler(async (req, res, next) => {
-  const profile = await Profile.findOne({ user: req.params.userId });
-  const myProfile = await Profile.findOne({ user: req.user.id });
+  console.log("request");
+
+  let profile = await Profile.findOne({ user: req.params.userId });
+  let myProfile = await Profile.findOne({ user: req.user.id });
+
+  console.log("request");
 
   // HANDLE USER PROFILE NOT EXIST
   if (!profile) {
     return next(new CustomError(`No user with id ${req.params.userId}`, 404));
   }
+
+  console.log("request");
 
   // HANDLE ALREADY FOLLOW USER
   if (profile.followers.includes(myProfile._id)) {
@@ -73,10 +79,17 @@ exports.follow = asyncHandler(async (req, res, next) => {
   }
 
   // FOLLOW THE USER
-  profile.followers.unshift(myProfile._id);
-  myProfile.following.unshift(profile._id);
-  await profile.save({ validateBeforeSave: true });
-  await myProfile.save({ validateBeforeSave: true });
+  profile = await Profile.findByIdAndUpdate(
+    profile._id,
+    { $push: { followers: myProfile._id } },
+    { new: true, runValidators: true }
+  );
+
+  myProfile = await Profile.findByIdAndUpdate(
+    myProfile._id,
+    { $push: { following: profile._id } },
+    { new: true, runValidators: true }
+  );
 
   res.status(200).json({
     status: "success",
@@ -88,8 +101,8 @@ exports.follow = asyncHandler(async (req, res, next) => {
 // @ROUTE    PATCH /api/v1/users/:userId/profile/unfollow
 // @ACCESS   PRIVATE
 exports.unfollow = asyncHandler(async (req, res, next) => {
-  const profile = await Profile.findOne({ user: req.params.userId });
-  const myProfile = await Profile.findOne({ user: req.user.id });
+  let profile = await Profile.findOne({ user: req.params.userId });
+  let myProfile = await Profile.findOne({ user: req.user.id });
 
   // HANDLE USER PROFILE NOT EXIST
   if (!profile) {
@@ -102,14 +115,17 @@ exports.unfollow = asyncHandler(async (req, res, next) => {
   }
 
   // UNFOLLOW THE USER
-  profile.followers = profile.followers.filter(
-    (follower) => follower.toString() !== myProfile._id.toString()
+  profile = await Profile.findByIdAndUpdate(
+    profile._id,
+    { $pull: { followers: myProfile._id } },
+    { new: true, runValidators: true }
   );
-  myProfile.following = myProfile.following.filter(
-    (following) => following.toString() !== profile._id.toString()
+
+  myProfile = await Profile.findByIdAndUpdate(
+    myProfile._id,
+    { $pull: { following: profile._id } },
+    { new: true, runValidators: true }
   );
-  await profile.save({ validateBeforeSave: true });
-  await myProfile.save({ validateBeforeSave: true });
 
   res.status(200).json({
     status: "success",

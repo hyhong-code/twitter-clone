@@ -3,7 +3,7 @@ import { Row, Col, Button, Image, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import TweetCard from "../components/TweetCard";
-import { getProfile } from "../../actions/profileAction";
+import { getProfile, follow } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 import EditProfileModal from "../components/EditProfileModal";
 
@@ -11,6 +11,7 @@ const Profile = ({
   match,
   history,
   getProfile,
+  follow,
   tweets,
   user,
   profile,
@@ -76,13 +77,19 @@ const Profile = ({
     </div>
   );
 
-  const followButton = () =>
-    profile.user._id !== user.id &&
-    (!profile.followers.includes(user.id) ? (
-      <Button variant="info">Follow</Button>
-    ) : (
-      <Button variant="warning">Unfolow</Button>
-    ));
+  const followButton = () => {
+    console.log(profile.followers.includes(user.id), user.id);
+    return (
+      profile.user._id !== user.id &&
+      (!profile.followers.includes(user.profile._id) ? (
+        <Button onClick={() => follow(profile.user._id)} variant="info">
+          Follow
+        </Button>
+      ) : (
+        <Button variant="warning">Unfolow</Button>
+      ))
+    );
+  };
 
   return !loading && tweets && user && profile ? (
     <Row className="pb-6">
@@ -109,4 +116,4 @@ const mapStateToProps = ({ tweets, auth: { user }, loading, profile }) => ({
   profile,
 });
 
-export default connect(mapStateToProps, { getProfile })(Profile);
+export default connect(mapStateToProps, { getProfile, follow })(Profile);

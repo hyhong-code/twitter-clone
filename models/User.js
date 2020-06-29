@@ -4,54 +4,60 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const UserSchema = new mongoose.Schema({
-  handle: {
-    type: String,
-    required: [true, "A handle is required"],
-    unique: [true, "Handle is already taken"],
-    trim: true,
-    lowercase: true,
-    minlength: [3, "A handle must be at least 3 charactres long"],
-    maxlength: [30, "A handle must be no more than 30 characters long"],
-    match: [
-      /^[a-zA-Z0-9-_]+$/,
-      'A handle can only contain "a-z", "0-9", "_", and "-"',
-    ],
-  },
-  email: {
-    type: String,
-    required: [true, "An email is required"],
-    unique: [true, "Email is already used"],
-    trim: true,
-    validate: {
-      validator: (v) => validator.isEmail(v),
-      message: "Please provide a valid email address",
+const UserSchema = new mongoose.Schema(
+  {
+    handle: {
+      type: String,
+      required: [true, "A handle is required"],
+      unique: [true, "Handle is already taken"],
+      trim: true,
+      lowercase: true,
+      minlength: [3, "A handle must be at least 3 charactres long"],
+      maxlength: [30, "A handle must be no more than 30 characters long"],
+      match: [
+        /^[a-zA-Z0-9-_]+$/,
+        'A handle can only contain "a-z", "0-9", "_", and "-"',
+      ],
     },
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: [6, "A password must be at least 6 characters long"],
-    maxlength: [30, "A password must no more than 30 characters long"],
-  },
-  passwordConfirm: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function (v) {
-        return v === this.password;
+    email: {
+      type: String,
+      required: [true, "An email is required"],
+      unique: [true, "Email is already used"],
+      trim: true,
+      validate: {
+        validator: (v) => validator.isEmail(v),
+        message: "Please provide a valid email address",
       },
-      message: "Passwords do not match",
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: [6, "A password must be at least 6 characters long"],
+      maxlength: [30, "A password must no more than 30 characters long"],
+    },
+    passwordConfirm: {
+      type: String,
+      required: true,
+      validate: {
+        validator: function (v) {
+          return v === this.password;
+        },
+        message: "Passwords do not match",
+      },
+    },
+    passwordChangedAt: {
+      type: Date,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
-  passwordChangedAt: {
-    type: Date,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    toJOSN: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 // HASH USER PASSWORD BEFORE SAVING
 UserSchema.pre("save", async function (next) {

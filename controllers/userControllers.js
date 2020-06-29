@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 const CustomError = require("../utils/customError");
 const asyncHandler = require("../utils/asyncHandler");
 
@@ -43,11 +44,13 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @ROUTE    POST /api/v1/users/loadMe
 // @ACCESS   PRIVATE
 exports.loadMe = asyncHandler(async (req, res, next) => {
-  const { id, handle, email } = req.user;
+  const user = await User.findById(req.user.id);
+  const profile = await Profile.findOne({ user: req.user.id });
+
   res.status(200).json({
     status: "success",
     data: {
-      user: { id, handle, email },
+      user: { ...user.toObject(), profile: profile.toObject() },
     },
   });
 });
