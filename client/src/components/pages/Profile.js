@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from "react";
-import { Row, Col, Button, Image } from "react-bootstrap";
+import { Row, Col, Button, Image, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import TweetCard from "../components/TweetCard";
@@ -24,16 +24,17 @@ const Profile = ({
     history.goBack();
   };
 
-  const tweetsDisplay = tweets.length ? (
-    <Fragment>
-      <p className="lead">User has {tweets.length} Tweets:</p>
-      {tweets.map((tweet) => (
-        <TweetCard key={tweet._id} tweet={tweet} user={user} />
-      ))}
-    </Fragment>
-  ) : (
-    <p className="lead">User has no tweets</p>
-  );
+  const tweetsDisplay = () =>
+    tweets.length ? (
+      <Fragment>
+        <p className="lead">User has {tweets.length} Tweets:</p>
+        {tweets.map((tweet) => (
+          <TweetCard key={tweet._id} tweet={tweet} user={user} />
+        ))}
+      </Fragment>
+    ) : (
+      <p className="lead">User has no tweets</p>
+    );
 
   const userProfile = () => (
     <Fragment>
@@ -64,6 +65,25 @@ const Profile = ({
     </Fragment>
   );
 
+  const followSection = () => (
+    <div className="mb-3">
+      <Badge pill variant="primary" className="mr-2">
+        {profile.followers.length} followers
+      </Badge>
+      <Badge pill variant="secondary">
+        {profile.following.length} following
+      </Badge>
+    </div>
+  );
+
+  const followButton = () =>
+    profile.user._id !== user.id &&
+    (!profile.followers.includes(user.id) ? (
+      <Button variant="info">Follow</Button>
+    ) : (
+      <Button variant="warning">Unfolow</Button>
+    ));
+
   return !loading && tweets && user && profile ? (
     <Row className="pb-6">
       <Col md={{ span: 8, offset: 2 }}>
@@ -71,8 +91,10 @@ const Profile = ({
           GO BACK
         </Button>
         {userProfile()}
+        {followSection()}
+        {followButton()}
         {profile.user && profile.user._id === user.id && <EditProfileModal />}
-        {tweetsDisplay}
+        {tweetsDisplay()}
       </Col>
     </Row>
   ) : (
