@@ -11,7 +11,7 @@ import axios from "axios";
 
 import { setTokenHeader } from "../util/auth";
 import { setAlert } from "./alertActions";
-import { connectSocket } from "./socketActions";
+import { connectSocket, disposeSocket } from "./socketActions";
 
 const config = {
   headers: {
@@ -74,5 +74,6 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+  dispatch(disposeSocket());
   dispatch(setAlert(false, `Logout success`, 3000));
 };

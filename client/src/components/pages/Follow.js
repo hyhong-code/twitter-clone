@@ -39,8 +39,10 @@ const Follow = ({ match, history, loading, profile, getFollow, socket }) => {
           rounded
         />
         <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
-        {onlineUsers.includes(follower.user.handle) && (
-          <Badge variant="success">Online</Badge>
+        {onlineUsers.includes(follower.user._id) && (
+          <Badge className="ml-2" variant="success">
+            Online
+          </Badge>
         )}
       </ListGroup.Item>
     );
