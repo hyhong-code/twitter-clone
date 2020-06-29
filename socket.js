@@ -1,5 +1,5 @@
-let CONNECTED_USERS = [];
 const CHAT_BOT = "$chat$admin";
+let connectedUsers = [];
 
 const connectSocket = (io) => {
   console.log(`Socket.io connected...`);
@@ -12,16 +12,16 @@ const connectSocket = (io) => {
     // HANDLE TRACKING ONLINE USERS
     socket.on("userConnected", (userId) => {
       // PUSH USER INTO linline USER LIST
-      CONNECTED_USERS.push({
+      connectedUsers.push({
         userId,
         socketId: socket.id,
       });
-      console.log(CONNECTED_USERS);
+      console.log("Current online user:", connectedUsers);
 
       // HANDLE A NEW USER ONLINE
       socket.broadcast.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.userId)
+        connectedUsers.map((user) => user.userId)
       );
     });
 
@@ -29,14 +29,14 @@ const connectSocket = (io) => {
     socket.on("getOnlineUser", () => {
       socket.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.userId)
+        connectedUsers.map((user) => user.userId)
       );
     });
 
     // HANDLE STARITING A CHAT SESSION
     socket.on("startChat", ({ selfId, targetId, targetHandle }) => {
       // SET CHAT TARGET
-      chatTarget = CONNECTED_USERS.find((user) => user.userId === targetId)
+      chatTarget = connectedUsers.find((user) => user.userId === targetId)
         .socketId;
 
       // SEND WELCOME MESSAGE
@@ -49,7 +49,6 @@ const connectSocket = (io) => {
 
     // HANDLE RECEIVING AND SENDING MESSAGE
     socket.on("message", ({ name, text }) => {
-      console.log(chatTarget);
       const msg = {
         name,
         text,
@@ -68,15 +67,15 @@ const connectSocket = (io) => {
       console.log("a user disconnected");
 
       // PULL USER OUT FROM CONNECTED USER LIST
-      CONNECTED_USERS = CONNECTED_USERS.filter(
+      connectedUsers = connectedUsers.filter(
         (user) => user.socketId !== socket.id
       );
-      console.log(CONNECTED_USERS);
+      console.log("Current online user:", connectedUsers);
 
       // HANDLE A USER LOGOFF
       socket.broadcast.emit(
         "onlineUsersUpdate",
-        CONNECTED_USERS.map((user) => user.userId)
+        connectedUsers.map((user) => user.userId)
       );
     });
   });

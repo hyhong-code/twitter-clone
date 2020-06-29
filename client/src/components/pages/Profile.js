@@ -84,7 +84,6 @@ const Profile = ({
   );
 
   const followButton = () => {
-    console.log(profile.followers.includes(user.id), user.id);
     return (
       profile.user._id !== user.id &&
       (!profile.followers.includes(user.profile._id) ? (

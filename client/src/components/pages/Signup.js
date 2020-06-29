@@ -20,7 +20,6 @@ const Signup = ({ signup, isAuthenticated }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     signup(formData);
-    console.log(formData);
   };
 
   if (isAuthenticated) {

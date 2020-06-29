@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Row, Col, ListGroup, Image, Button, Badge } from "react-bootstrap";
 import { connect } from "react-redux";
 
@@ -15,6 +15,7 @@ const Follow = ({
   getFollow,
   socket,
   setChatTarget,
+  clearChatTarget,
 }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -36,7 +37,6 @@ const Follow = ({
     socket.emit("getOnlineUser");
 
     socket.on("onlineUsersUpdate", (users) => {
-      console.log(users);
       setOnlineUsers(users);
     });
   }, []);
