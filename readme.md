@@ -1,6 +1,7 @@
 # MERN STACK TWITTER CLONE
+### Main technolodges: Node/express MongoDB/mongoose React Redux Bootstrap. Implemented jwt authentication, full CRUD functionalities, image uploads, websokcet powered realtime chat, etc. 
 ---
-** Current Features: **
+**Current Features:**
 - User login / signup
 - Update profile info / profile image
 - Access users' profile pages
@@ -11,27 +12,28 @@
 - Real time chat room
 ---
 [Live demo](https://hong-twitter-clone.herokuapp.com)
-*Tweet with image add profile pic works in development server but not live demo, heroku does not support wrtting to filesystem, need to integrate amazon s3*
+Tweet with image add profile pic works in development enviroment but not heroku server. Need to integrate amazon s3.
 ---
 ## SHOWCASE:
 
 ### HOME PAGE
 ![homepage](public/project-showcase/home.png)
+<img src="./public/project-showcase/home.png">
 
 ### SIGNUP /w validation from backend
-![signup](public/project-showcase/auth.png)
+<img src="./public/project-showcase/auth.png" width="40%">
 
 ### LIKING A TWEET
-![like](public/project-showcase/like.png)
+<img src="./public/project-showcase/like.png" width="40%">
 
 ### MAKING A COMMENT
-![comment](public/project-showcase/comment.png)
+<img src="./public/project-showcase/comment.png" width="40%">
 
 ### PROFILE PAGE
-![profile](public/project-showcase/profile.png)
+<img src="./public/project-showcase/profile.png" width="40%">
 
 ### EDITING PROFILE
-![edit-profile](public/project-showcase/edit.png)
+<img src="./public/project-showcase/edit.png" width="40%">
 
 ### REAL TIME CHAT
-![chat](public/project-showcase/chat.png)
+<img src="./public/project-showcase/chat.png">
