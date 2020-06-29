@@ -1,27 +1,34 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Form, ListGroup, Button } from "react-bootstrap";
-import io from "socket.io-client";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alertActions";
+import io from "socket.io-client";
 
 import Message from "./Message";
 
 const Chat = ({ handle, setAlert }) => {
-  const inputRef = useRef();
   const socketRef = useRef();
+  const inputRef = useRef();
+  const chatBoardRef = useRef();
+
+  const [msg, setMsg] = useState("");
+  const [chats, setChats] = useState([]);
 
   useEffect(() => {
     socketRef.current = io("/");
 
     socketRef.current.on("message", (message) => {
-      setChats((prev) => [message, ...prev]);
+      console.log(message);
+      setChats((prev) => [...prev, message]);
     });
 
     return () => socketRef.current.disconnect();
   }, []);
 
-  const [msg, setMsg] = useState("");
-  const [chats, setChats] = useState([]);
+  useEffect(() => {
+    // USE useEffect TO SIMULATE CLASS COMPONENT setState CALLBACK
+    chatBoardRef.current.scrollTop = chatBoardRef.current.scrollHeight;
+  }, [chats]);
 
   const handleChange = (evt) => {
     setMsg(evt.target.value);
@@ -44,29 +51,29 @@ const Chat = ({ handle, setAlert }) => {
 
   return (
     <Fragment>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Enter message:</Form.Label>
-          <Form.Control
-            type="text"
-            value={msg}
-            onChange={handleChange}
-            ref={inputRef}
-            minLength={1}
-          />
-        </Form.Group>
-        <Button variant="outline-dark" type="submit">
-          Send
-        </Button>
-      </Form>
-
-      <div className="message-board mt-3 border p-2">
+      <div className="message-board mt-3 border p-2" ref={chatBoardRef}>
         <ListGroup>
           {chats.map((chat) => (
             <Message key={`${chat.name}-${chat.date}`} chat={chat} />
           ))}
         </ListGroup>
       </div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Control
+            className="mt-1"
+            type="text"
+            value={msg}
+            onChange={handleChange}
+            ref={inputRef}
+            minLength={1}
+            placeholder="Enter message..."
+          />
+        </Form.Group>
+        <Button variant="outline-dark" type="submit">
+          Send
+        </Button>
+      </Form>
     </Fragment>
   );
 };

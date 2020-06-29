@@ -17,7 +17,6 @@ Tweet with image add profile pic works in development enviroment but not heroku 
 ## SHOWCASE:
 
 ### HOME PAGE
-![homepage](public/project-showcase/home.png)
 <img src="./public/project-showcase/home.png">
 
 ### SIGNUP /w validation from backend
