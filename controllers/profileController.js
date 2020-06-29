@@ -26,10 +26,10 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     const filePath =
       process.env.NODE_ENV === "production"
         ? path.resolve(
-            `${__dirname}/../client/public/uploads/users/${fileName}`
+            `${__dirname}/../client/build/public/uploads/users/${fileName}`
           )
         : path.resolve(
-            `${__dirname}/../client/build/public/uploads/users/${fileName}`
+            `${__dirname}/../client/public/uploads/users/${fileName}`
           );
     await sharp(req.files.file.data).resize(400, 400).jpeg().toFile(filePath);
 
