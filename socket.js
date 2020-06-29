@@ -1,9 +1,9 @@
-let CONNECTED_USER = [];
+let CONNECTED_USERS = [];
+
+const CHAT_BOT = "$chat$admin";
+const ROOM_PREFIX = "$room$";
 
 const connectSocket = (io) => {
-  const CHAT_BOT = "$chat$admin";
-  const ROOM_PREFIX = "$room$";
-
   console.log(`Socket.io connected...`);
 
   // RUN WHEN A NEW CLIENT CONNECTS
@@ -12,11 +12,25 @@ const connectSocket = (io) => {
 
     socket.on("userConnected", (handle) => {
       // PUSH USER INTO CONNECTED USER LIST
-      CONNECTED_USER.push({
+      CONNECTED_USERS.push({
         handle,
         socketId: socket.id,
       });
-      console.log(CONNECTED_USER);
+      console.log(CONNECTED_USERS);
+
+      // HANDLE A NEW USER ONLINE
+      socket.broadcast.emit(
+        "onlineUsersUpdate",
+        CONNECTED_USERS.map((user) => user.handle)
+      );
+    });
+
+    // HANDLE message PAGE FIRST LOADED
+    socket.on("getOnlineUser", () => {
+      socket.emit(
+        "onlineUsersUpdate",
+        CONNECTED_USERS.map((user) => user.handle)
+      );
     });
 
     // // EMIT TO THIS SOCKET
@@ -44,10 +58,16 @@ const connectSocket = (io) => {
       console.log("a user disconnected");
 
       // PULL USER OUT FROM CONNECTED USER LIST
-      CONNECTED_USER = CONNECTED_USER.filter(
+      CONNECTED_USERS = CONNECTED_USERS.filter(
         (user) => user.socketId !== socket.id
       );
-      console.log(CONNECTED_USER);
+      console.log(CONNECTED_USERS);
+
+      // HANDLE A USER LOGOFF
+      socket.broadcast.emit(
+        "onlineUsersUpdate",
+        CONNECTED_USERS.map((user) => user.handle)
+      );
 
       // io.emit("message", {
       //   name: CHAT_BOT,
@@ -57,18 +77,5 @@ const connectSocket = (io) => {
     });
   });
 };
-
-/*
-[0] {
-[0]   '2lldnIkKGnL8V7gzAAAA': Room { sockets: { '2lldnIkKGnL8V7gzAAAA': true }, length: 1 },
-[0]   room1: Room {
-[0]     sockets: { '2lldnIkKGnL8V7gzAAAA': true, RuvTXGfhpYxzsW06AAAB: true },
-[0]     length: 2
-[0]   },
-[0]   RuvTXGfhpYxzsW06AAAB: Room { sockets: { RuvTXGfhpYxzsW06AAAB: true }, length: 1 },
-[0]   NiVbMvEHsk2TT4UTAAAC: Room { sockets: { NiVbMvEHsk2TT4UTAAAC: true }, length: 1 }
-[0] }
-
-*/
 
 module.exports = connectSocket;
