@@ -18,7 +18,7 @@ const Home = ({ getTweets, isAuthenticated, user, tweets, loading }) => {
   }
 
   return !loading && user && tweets ? (
-    <Row className="pb-6">
+    <Row className="pt-6">
       <Col md={{ span: 8, offset: 2 }}>
         <TweetForm />
         <div className="p-4">

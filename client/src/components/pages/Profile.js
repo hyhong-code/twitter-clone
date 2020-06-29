@@ -95,7 +95,7 @@ const Profile = ({
   };
 
   return !loading && tweets && user && profile ? (
-    <Row className="pb-6">
+    <Row className="pt-6">
       <Col md={{ span: 8, offset: 2 }}>
         <Button className="my-3" variant="secondary" onClick={handleClick}>
           GO BACK

@@ -28,7 +28,7 @@ const Signup = ({ signup, isAuthenticated }) => {
   }
 
   return (
-    <Row className="pb-6">
+    <Row className="pt-6">
       <Col md={{ span: 6, offset: 3 }}>
         <h1 className="display-4">Signup</h1>
         <Form onSubmit={handleSubmit}>

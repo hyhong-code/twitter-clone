@@ -22,7 +22,7 @@ const Comment = ({
   }, [getComments, match.params.tweetId]);
 
   return !loading && user && commentingTweet && comments ? (
-    <Row className="pb-6">
+    <Row className="pt-6">
       <Col md={{ span: 8, offset: 2 }}>
         <Button className="mb-3" onClick={() => history.goBack()}>
           Back

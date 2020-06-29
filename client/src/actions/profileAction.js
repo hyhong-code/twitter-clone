@@ -9,6 +9,7 @@ import {
   PROFILE_UPDATED,
   PROFILE_FOLLOWED,
   PROFILE_UNFOLLOWED,
+  FOLLOW_LOADED,
 } from "./actionTypes";
 
 export const getProfile = (id) => async (dispatch) => {
@@ -84,4 +85,19 @@ export const unfollow = (userId) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getFollow = (profileId) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const resp = await axios.get(`/api/v1/profile/${profileId}`);
+    console.log(resp.data);
+    dispatch({
+      type: FOLLOW_LOADED,
+      payload: resp.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  dispatch(clearLoading());
 };
