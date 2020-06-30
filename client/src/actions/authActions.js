@@ -6,6 +6,7 @@ import {
   LOGOUT,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
+  USER_DELETED,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -76,4 +77,17 @@ export const logout = () => (dispatch) => {
   });
   dispatch(disposeSocket());
   dispatch(setAlert(false, `Logout success`, 3000));
+};
+
+export const deleteUser = () => async (dispatch) => {
+  try {
+    await axios.delete("/api/v1/users/deleteme");
+    dispatch({
+      type: USER_DELETED,
+    });
+    dispatch(setAlert(false, `Account deleted`, 3000));
+  } catch (error) {
+    console.log(error);
+    dispatch(setAlert(true, error.response.data.message));
+  }
 };

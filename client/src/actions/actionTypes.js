@@ -8,6 +8,7 @@ export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 
 export const LOGOUT = "LOGOUT";
+export const USER_DELETED = "USER_DELETED";
 
 export const GET_TWEETS = "GET_TWEETS";
 export const CREATE_TWEET = "CREATE_TWEET";

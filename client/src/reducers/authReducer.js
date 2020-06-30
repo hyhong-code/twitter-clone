@@ -6,6 +6,7 @@ import {
   LOGOUT,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
+  USER_DELETED,
 } from "../actions/actionTypes.js";
 const { setTokenHeader } = require("../util/auth");
 
@@ -31,6 +32,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case SIGNUP_FAILED:
     case AUTH_ERROR:
     case LOGOUT:
+    case USER_DELETED:
       localStorage.removeItem("jwtToken");
       setTokenHeader(false);
       return { ...state, isAuthenticated: false, user: null };
