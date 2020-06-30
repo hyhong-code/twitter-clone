@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { deleteUser } from "../../actions/authActions";
@@ -15,8 +15,8 @@ const DeleteAccountModal = ({ deleteUser }) => {
     setPassword(evt.target.value);
   };
 
-  const handleClick = (evt) => {
-    deleteUser();
+  const handleClick = () => {
+    deleteUser(password);
   };
 
   return (
@@ -31,7 +31,7 @@ const DeleteAccountModal = ({ deleteUser }) => {
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
-            <Form.label>Please Confirm Password</Form.label>
+            <Form.Label>Please confirm password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Your password"

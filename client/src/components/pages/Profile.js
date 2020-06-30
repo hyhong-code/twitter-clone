@@ -7,6 +7,7 @@ import TweetCard from "../components/TweetCard";
 import { getProfile, follow, unfollow } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 import EditProfileModal from "../components/EditProfileModal";
+import DeleteAccountModal from "../components/DeleteAccountModal";
 
 const Profile = ({
   match,
@@ -108,6 +109,7 @@ const Profile = ({
         {followSection()}
         {followButton()}
         {profile.user && profile.user._id === user.id && <EditProfileModal />}
+        {profile.user && profile.user._id === user.id && <DeleteAccountModal />}
         {tweetsDisplay()}
       </Col>
     </Row>

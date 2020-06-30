@@ -79,9 +79,18 @@ export const logout = () => (dispatch) => {
   dispatch(setAlert(false, `Logout success`, 3000));
 };
 
-export const deleteUser = () => async (dispatch) => {
+export const deleteUser = (password) => async (dispatch) => {
+  console.log(password);
+  const deleteConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      password,
+    },
+  };
   try {
-    await axios.delete("/api/v1/users/deleteme");
+    await axios.delete("/api/v1/users/deleteme", deleteConfig);
     dispatch({
       type: USER_DELETED,
     });
