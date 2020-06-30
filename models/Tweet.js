@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comment = require("./Comment");
 
 const TweetSchema = new mongoose.Schema(
   {
@@ -62,6 +63,12 @@ TweetSchema.pre(/^find/, function (next) {
     .populate({
       path: "comments",
     });
+  next();
+});
+
+// CASCADE DELTE COMMENTS
+TweetSchema.pre("remove", async function (next) {
+  await Comment.deleteMany({ tweet: this._id });
   next();
 });
 

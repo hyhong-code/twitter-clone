@@ -54,3 +54,27 @@ exports.loadMe = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
+// @DESC     DELETE CURRENT USER
+// @ROUTE    DELETE /api/v1/users
+// @ACCESS   PRIVATE
+exports.deleteMe = asyncHandler(async (req, res, next) => {
+  const { password } = req.body;
+  const user = await User.findById(req.user.id);
+
+  // HANDLE NO PASSWORD
+  if (!password) {
+    return next(new CustomError(`Please enter your password`, 401));
+  }
+
+  // HANDLE INCORRECT PASSWORD
+  if (!(await user.isCorrectPassword(password))) {
+    return next(new CustomError(`Invalid credentials`, 401));
+  }
+
+  await user.remove();
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

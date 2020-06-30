@@ -43,24 +43,24 @@ const Profile = ({
     <Fragment>
       <Image
         width="200"
-        className="d-block"
+        className="d-block mx-auto"
         src={process.env.PUBLIC_URL + `/uploads/users/${profile.photo}`}
         roundedCircle
       />
       {profile.user && (
-        <h3>
+        <h3 className="text-center">
           <strong>HANDLE: @</strong>
           {profile.user.handle}
         </h3>
       )}
       {!!profile.name && (
-        <h4>
+        <h4 className="text-center">
           <strong>NAME: </strong>
           {profile.name}
         </h4>
       )}
       {!!profile.bio && (
-        <p className="lead">
+        <p className="lead text-center">
           <strong>BIO: </strong>
           {profile.bio}
         </p>
@@ -69,7 +69,7 @@ const Profile = ({
   );
 
   const followSection = () => (
-    <div className="mb-3">
+    <div className="mb-3 text-center">
       <LinkContainer className="user" exact to={`/follow/${profile._id}`}>
         <div>
           <Badge pill variant="primary" className="mr-2">

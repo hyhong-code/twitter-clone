@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Profile = require("./Profile");
+const Tweet = require("./Tweet");
+const Comment = require("./Comment");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -71,6 +73,15 @@ UserSchema.pre("save", async function (next) {
 UserSchema.pre("save", async function (next) {
   if (!this.isNew) return next();
   await Profile.create({ user: this._id });
+  next();
+});
+
+// CASCADE DELETE PROFILE AND TWEETS
+UserSchema.pre("remove", async function (next) {
+  await Profile.findOneAndDelete({ user: this._id });
+  const tweets = await Tweet.find({ user: this._id });
+  const promises = tweets.map((tweet) => tweet.remove());
+  await Promise.all(promises);
   next();
 });
 
