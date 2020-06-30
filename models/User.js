@@ -79,6 +79,7 @@ UserSchema.pre("save", async function (next) {
 // CASCADE DELETE PROFILE AND TWEETS
 UserSchema.pre("remove", async function (next) {
   await Profile.findOneAndDelete({ user: this._id });
+  await Comment.deleteMany({ user: this._id });
   const tweets = await Tweet.find({ user: this._id });
   const promises = tweets.map((tweet) => tweet.remove());
   await Promise.all(promises);
