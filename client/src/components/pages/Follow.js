@@ -51,7 +51,7 @@ const Follow = ({
         <Image
           src={process.env.PUBLIC_URL + `/uploads/users/${follower.photo}`}
           width="35"
-          rounded
+          className="rounded-circle"
         />
         <span className="ml-1 ml-md-3">@ {follower.user.handle}</span>
         {onlineUsers.includes(follower.user._id) ? (

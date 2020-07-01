@@ -22,7 +22,7 @@ const CommentCard = ({ comment, user, deleteComment }) => {
               width="35"
               alt="profilePic"
             />
-            @{user.handle}
+            @{comment.profile.user.handle}
           </Card.Title>
         </LinkContainer>
         <Card.Text className="my-1 mt-0">{comment.text}</Card.Text>
