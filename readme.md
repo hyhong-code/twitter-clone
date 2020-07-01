@@ -27,19 +27,19 @@
 ## SHOWCASE:
 
 ### HOME PAGE
-<img src="./public/project-showcase/home.png" width="90%">
+<img src="./public/project-showcase/home-1.png" width="90%">
 
 ### PROFILE PAGE
-<img src="./public/project-showcase/profile.png" width="90%">
+<img src="./public/project-showcase/profile-1.png" width="90%">
 
 ### PROFILE PAGE
-<img src="./public/project-showcase/comment.png" width="90%">
+<img src="./public/project-showcase/comment-1.png" width="90%">
 
 ### CHAT PAGE
-<img src="./public/project-showcase/chat.png" width="90%">
+<img src="./public/project-showcase/chat-1.png" width="90%">
 
 ### AUTHENTICATION PAGE
-<img src="./public/project-showcase/auth.png" width="90%">
+<img src="./public/project-showcase/auth-1.png" width="90%">
 
 ### FOLLOWING / FOLLOWERS PAGE
-<img src="./public/project-showcase/following.png" width="90%">
+<img src="./public/project-showcase/following-1.png" width="90%">
