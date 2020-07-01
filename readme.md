@@ -32,7 +32,7 @@
 ### PROFILE PAGE
 <img src="./public/project-showcase/profile-1.png" width="90%">
 
-### PROFILE PAGE
+### COMMENT PAGE
 <img src="./public/project-showcase/comment-1.png" width="90%">
 
 ### CHAT PAGE
